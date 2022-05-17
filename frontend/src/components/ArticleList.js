@@ -32,6 +32,9 @@ function ArticleList(props) {
 
   return (
     <div>
+      {props.articles.length < 1 && (
+        <span id="empty-search">Sorry, we couldn't find any results.</span>
+      )}
       {props.articles &&
         props.articles.map((article) => {
           return (

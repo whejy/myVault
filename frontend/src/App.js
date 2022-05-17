@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 function App() {
   const [articles, setArticles] = useState([]);
   const [editArticle, setEditArticle] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
+  const [searchFilter, setSearchFilter] = useState("username");
   const [modal, setModal] = useState({ isOpen: false, title: "" });
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
@@ -43,6 +45,20 @@ function App() {
       // window.location.href = "/";
     }
   }, [token]);
+
+  // Filter search results
+  const searchBy = (selector) => {
+    setSearchFilter(selector);
+  };
+
+  // Allows user to search for an article using radio button filters
+  const Search = (query) => {
+    setSearchResults(
+      articles.filter((article) =>
+        article[searchFilter].toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  };
 
   // Edit an article
   const editBtn = (article) => {
@@ -116,7 +132,7 @@ function App() {
           <br />
           <ArticleList
             vis={vis}
-            articles={articles}
+            articles={searchResults ? searchResults : articles}
             editBtn={editBtn}
             deleteBtn={deleteBtn}
             toggle={toggle}
@@ -127,6 +143,25 @@ function App() {
           <button onClick={articleForm} className="btn btn-primary">
             New Entry
           </button>
+        </div>
+
+        <div className="col">
+          <input
+            placeholder="Search"
+            onChange={(e) => Search(e.target.value)}
+          />
+          <div onChange={(e) => searchBy(e.target.value)}>
+            <input
+              defaultChecked="checked"
+              type="radio"
+              value="username"
+              name="search-query"
+            />{" "}
+            Username
+            <input type="radio" value="description" name="search-query" />
+            Description
+            <input type="radio" value="url" name="search-query" /> URL
+          </div>
         </div>
 
         <div className="col">

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ArticleList from "./components/ArticleList";
 import Form from "./components/Form";
 import FormModal from "./components/FormModal";
@@ -12,10 +12,12 @@ function App() {
   const [articles, setArticles] = useState([]);
   const [editArticle, setEditArticle] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("username");
   const [modal, setModal] = useState({ isOpen: false, title: "" });
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
+  let initialRender = useRef(true);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/vault/", {
@@ -42,22 +44,42 @@ function App() {
   useEffect(() => {
     if (!token["mytoken"]) {
       navigate("/");
-      // window.location.href = "/";
     }
   }, [token]);
 
-  // Filter search results
-  const searchBy = (selector) => {
+  // Update Search results as user modifies query. Ignore on initial page render.
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      Search();
+    }
+  }, [searchFilter, searchQuery]);
+
+  // Store user's search filter
+  const handleSearchFilter = (selector) => {
     setSearchFilter(selector);
   };
 
+  // Store user's search query
+  const handleSearchQuery = (query) => {
+    setSearchQuery(query);
+  };
+
   // Allows user to search for an article using radio button filters
-  const Search = (query) => {
-    setSearchResults(
-      articles.filter((article) =>
-        article[searchFilter].toLowerCase().includes(query.toLowerCase())
-      )
-    );
+  const Search = () => {
+    if (searchQuery) {
+      setSearchResults(
+        articles.filter((article) =>
+          article[searchFilter]
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+        )
+      );
+      // If user erases search input, trigger render of original article list
+    } else {
+      setSearchResults(null);
+    }
   };
 
   // Edit an article
@@ -75,6 +97,17 @@ function App() {
     });
 
     setArticles(new_articles);
+
+    // If on search results page, refresh results
+    if (searchResults) {
+      const new_articles = searchResults.filter((myarticle) => {
+        if (myarticle.id === article.id) {
+          return false;
+        }
+        return true;
+      });
+      setSearchResults(new_articles);
+    }
   };
 
   // Toggle password visibility on page and refresh article list
@@ -111,8 +144,13 @@ function App() {
 
   // Insert new article into article list
   const insertedInformation = (article) => {
-    const new_articles = [...articles, article];
+    const new_articles = [article, ...articles];
     setArticles(new_articles);
+
+    // If adding new entry from search results page, trigger page update
+    if (searchResults) {
+      Search();
+    }
   };
 
   const logoutBtn = () => {
@@ -148,9 +186,9 @@ function App() {
         <div className="col">
           <input
             placeholder="Search"
-            onChange={(e) => Search(e.target.value)}
+            onChange={(e) => handleSearchQuery(e.target.value)}
           />
-          <div onChange={(e) => searchBy(e.target.value)}>
+          <div onChange={(e) => handleSearchFilter(e.target.value)}>
             <input
               defaultChecked="checked"
               type="radio"

@@ -14,7 +14,7 @@ class VaultViewSet(viewsets.ModelViewSet):
     # Override default queryset so that only logged in user's vault is returned
     def get_queryset(self):
         user = self.request.user
-        return Vault.objects.filter(author=user)
+        return Vault.objects.filter(author=user).order_by('-created')
 
     # Override default model save instance to include a foreign key when new password is stored
     def perform_create(self, serializer):

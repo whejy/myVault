@@ -11,6 +11,7 @@ class Vault(models.Model):
     description = models.CharField(max_length=100, blank=True)
     url = models.URLField(max_length=255, blank=True,
                           validators=[URLValidator])
+    created = models.DateTimeField(auto_now_add=True)
 
     def _str_(self):
         return self.username

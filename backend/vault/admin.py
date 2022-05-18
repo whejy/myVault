@@ -6,5 +6,7 @@ from .models import Vault
 
 @admin.register(Vault)
 class VaultModel(admin.ModelAdmin):
-    list_filter = ('author', 'username', 'password', 'description', 'url')
-    list_display = ('author', 'username', 'password', 'description', 'url')
+    list_filter = ('author', 'username', 'password',
+                   'description', 'url', 'created')
+    list_display = ('author', 'username', 'password',
+                    'description', 'url', 'created')

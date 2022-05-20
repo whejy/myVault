@@ -5,7 +5,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  //   Form,
   FormGroup,
   Input,
   Label,
@@ -22,12 +21,27 @@ export class FormModal extends Component {
               {this.props.modal.title}
             </ModalHeader>
             <ModalBody>
-              <Form
-                article={this.props.article}
-                updatedInformation={this.props.updatedInformation}
-                insertedInformation={this.props.insertedInformation}
-                toggle={this.props.toggle}
-              />
+              {this.props.deleteConfirm ? (
+                <div>
+                  Are you sure you want to delete your storage item for{" "}
+                  <b>Username: {this.props.article.username}</b>?
+                  <div>
+                    <Button
+                      onClick={() => this.props.deleteBtn(this.props.article)}
+                      className="btn btn-danger"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Form
+                  article={this.props.article}
+                  updatedInformation={this.props.updatedInformation}
+                  insertedInformation={this.props.insertedInformation}
+                  toggle={this.props.toggle}
+                />
+              )}
             </ModalBody>
             {/* <ModalFooter>
               <Button color="success" onClick={() => console.log("test")}>

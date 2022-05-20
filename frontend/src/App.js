@@ -1,16 +1,15 @@
 import "./App.css";
 import React, { useState, useEffect, useRef } from "react";
 import ArticleList from "./components/ArticleList";
-import Form from "./components/Form";
 import FormModal from "./components/FormModal";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-
-// export const MyContext = React.createContext();
+import APIService from "./APIService";
 
 function App() {
   const [articles, setArticles] = useState([]);
   const [editArticle, setEditArticle] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("username");
@@ -54,7 +53,7 @@ function App() {
     } else {
       Search();
     }
-  }, [searchFilter, searchQuery]);
+  }, [searchFilter, searchQuery, articles]);
 
   // Store user's search filter
   const handleSearchFilter = (selector) => {
@@ -89,6 +88,10 @@ function App() {
 
   // Delete an article then refresh article list
   const deleteBtn = (article) => {
+    APIService.DeleteArticle(article.id, token["mytoken"])
+      .then(() => console.log(article))
+      .catch((error) => console.log(error));
+
     const new_articles = articles.filter((myarticle) => {
       if (myarticle.id === article.id) {
         return false;
@@ -108,6 +111,8 @@ function App() {
       });
       setSearchResults(new_articles);
     }
+
+    toggle();
   };
 
   // Toggle password visibility on page and refresh article list
@@ -146,19 +151,16 @@ function App() {
   const insertedInformation = (article) => {
     const new_articles = [article, ...articles];
     setArticles(new_articles);
-
-    // If adding new entry from search results page, trigger page update
-    if (searchResults) {
-      Search();
-    }
   };
 
   const logoutBtn = () => {
     removeToken(["mytoken"]);
   };
 
-  const toggle = (title = "") => {
+  // Toggle modal
+  const toggle = (title = "", deleteCheck = null) => {
     setModal({ isOpen: !modal.isOpen, title: title });
+    deleteCheck ? setDeleteConfirm(true) : setDeleteConfirm(false);
   };
 
   return (
@@ -172,8 +174,9 @@ function App() {
             vis={vis}
             articles={searchResults ? searchResults : articles}
             editBtn={editBtn}
-            deleteBtn={deleteBtn}
             toggle={toggle}
+            deleteConfirm={deleteConfirm}
+            setDeleteConfirm={setDeleteConfirm}
           />
         </div>
 
@@ -208,7 +211,6 @@ function App() {
           </button>
         </div>
       </div>
-      {/* {modal ? <CustomModal toggle={toggle} /> : null} */}
       {editArticle ? (
         <FormModal
           article={editArticle}
@@ -216,6 +218,8 @@ function App() {
           insertedInformation={insertedInformation}
           modal={modal}
           toggle={toggle}
+          deleteConfirm={deleteConfirm}
+          deleteBtn={deleteBtn}
         />
       ) : null}
 

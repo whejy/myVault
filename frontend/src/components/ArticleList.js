@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import APIService from "../APIService";
-import { useCookies } from "react-cookie";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
-  const [token] = useCookies(["mytoken"]);
 
   //   Edit an article and reset copied password
-  const editBtn = (article) => {
+  const editBtn = (article, deleteCheck = null) => {
     setIsActive(null);
-    props.toggle("Update Item");
+    if (deleteCheck) {
+      props.toggle("Confirm Delete", deleteCheck);
+    } else {
+      props.toggle("Update Item");
+    }
     props.editBtn(article);
-  };
-
-  //   Delete an article
-  const deleteBtn = (article) => {
-    APIService.DeleteArticle(article.id, token["mytoken"])
-      .then(() => props.deleteBtn(article))
-      .catch((error) => console.log(error));
   };
 
   //   Send to App password to be hidden
@@ -89,7 +83,7 @@ function ArticleList(props) {
 
                 <div className="col">
                   <button
-                    onClick={() => deleteBtn(article)}
+                    onClick={() => editBtn(article, true)}
                     className="btn btn-danger"
                   >
                     Delete

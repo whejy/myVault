@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+.fake-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.fake-link:hover {
+  text-decoration: underline;
+  color: #4d7ae3;
+}
+
 
 .App-logo {
   height: 40vmin;

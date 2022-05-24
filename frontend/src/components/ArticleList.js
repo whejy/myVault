@@ -35,7 +35,7 @@ function ArticleList(props) {
             <div key={article.id}>
               <h2>Username: {article.username}</h2>
               <p>{article.author}</p>
-              <span className="test">
+              <span className="">
                 <h2>
                   Password:{" "}
                   {article.visibility

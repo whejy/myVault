@@ -4,6 +4,8 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 class VaultViewSet(viewsets.ModelViewSet):
@@ -14,29 +16,36 @@ class VaultViewSet(viewsets.ModelViewSet):
     # Override default queryset so that only logged in user's vault is returned
     def get_queryset(self):
         user = self.request.user
-        return Vault.objects.filter(author=user).order_by('-created')
+        return Vault.objects.filter(author=user).order_by("-created")
 
     # Override default model save instance to include a foreign key when new password is stored
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    # Delete ALL storage instances at once method (by visiting vault/delete)
+    @action(methods=["DELETE"], detail=False)
+    def delete(self, request):
+        delete_storage = Vault.objects.filter(author=request.user)
+        delete_storage.delete()
+        return Response(data=None)
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    '''Gets all user's accounts'''
+    """Gets all user's accounts"""
     # def get_queryset(self):
     #     return self.request.user.accounts.all()
 
 
-'''
+"""
 class VaultViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = Vault.objects.all()
     serializer_class = VaultSerializer
-'''
+"""
 
-'''
+"""
 class VaultViewSet(viewsets.ViewSet):
 
     def list(self, request):
@@ -70,10 +79,10 @@ class VaultViewSet(viewsets.ViewSet):
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-'''
+"""
 
 
-'''
+"""
 # Access vault
 class VaultList(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     queryset = Vault.objects.all()
@@ -106,7 +115,7 @@ class ItemDetails(mixins.RetrieveModelMixin,
     def delete(self, request, id):
         return self.destroy(request, id=id)
 
-'''
+"""
 
 # @api_view(['GET', 'POST'])
 # def vault_list(request):

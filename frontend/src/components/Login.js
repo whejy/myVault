@@ -113,17 +113,17 @@ function Login() {
         {isLogin ? (
           <h5>
             If You Don't Have An Account, Please{" "}
-            <button onClick={() => setLogin(false)} className="btn btn-primary">
-              Register
-            </button>
+            <span className="fake-link" onClick={() => setLogin(false)}>
+              Register{" "}
+            </span>
             Here
           </h5>
         ) : (
           <h5>
-            If You Have An Account, Please
-            <button onClick={() => setLogin(true)} className="btn btn-primary">
-              Login
-            </button>
+            If You Have An Account, Please{" "}
+            <span className="fake-link" onClick={() => setLogin(true)}>
+              Login{" "}
+            </span>
             Here
           </h5>
         )}

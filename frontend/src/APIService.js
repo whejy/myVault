@@ -21,6 +21,16 @@ export default class APIService {
     }).then((resp) => resp.json());
   }
 
+  static DeleteAll(token) {
+    return fetch("http://127.0.0.1:8000/vault/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    });
+  }
+
   static DeleteArticle(article_id, token) {
     return fetch(`http://127.0.0.1:8000/vault/${article_id}/`, {
       method: "DELETE",

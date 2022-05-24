@@ -86,6 +86,14 @@ function App() {
     setEditArticle(article);
   };
 
+  // User deletes all storage items at once
+  const deleteAll = () => {
+    APIService.DeleteAll(token["mytoken"])
+      .then(() => console.log("Deleted All"))
+      .catch((error) => console.log(error));
+    setArticles([]);
+  };
+
   // Delete an article then refresh article list
   const deleteBtn = (article) => {
     APIService.DeleteArticle(article.id, token["mytoken"])
@@ -208,6 +216,11 @@ function App() {
         <div className="col">
           <button onClick={logoutBtn} className="btn btn-primary">
             Logout
+          </button>
+        </div>
+        <div className="col">
+          <button onClick={deleteAll} className="btn btn-danger">
+            Delete All
           </button>
         </div>
       </div>

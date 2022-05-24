@@ -8,8 +8,11 @@ import APIService from "./APIService";
 
 function App() {
   const [articles, setArticles] = useState([]);
-  const [editArticle, setEditArticle] = useState(null);
-  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [editArticle, setEditArticle] = useState(true);
+  const [deleteConfirm, setDeleteConfirm] = useState({
+    single: false,
+    all: false,
+  });
   const [searchResults, setSearchResults] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("username");
@@ -91,7 +94,9 @@ function App() {
     APIService.DeleteAll(token["mytoken"])
       .then(() => console.log("Deleted All"))
       .catch((error) => console.log(error));
+
     setArticles([]);
+    toggle();
   };
 
   // Delete an article then refresh article list
@@ -165,10 +170,17 @@ function App() {
     removeToken(["mytoken"]);
   };
 
-  // Toggle modal
-  const toggle = (title = "", deleteCheck = null) => {
+  // Toggle modal and its content
+  const toggle = (title = "", deleteCheck = null, deleteCheckAll = null) => {
     setModal({ isOpen: !modal.isOpen, title: title });
-    deleteCheck ? setDeleteConfirm(true) : setDeleteConfirm(false);
+
+    if (deleteCheck) {
+      setDeleteConfirm({ all: false, single: true });
+    } else if (deleteCheckAll) {
+      setDeleteConfirm({ all: true, single: false });
+    } else {
+      setDeleteConfirm({ all: false, single: false });
+    }
   };
 
   return (
@@ -219,7 +231,12 @@ function App() {
           </button>
         </div>
         <div className="col">
-          <button onClick={deleteAll} className="btn btn-danger">
+          <button
+            onClick={() => {
+              toggle("Delete ALL", false, true);
+            }}
+            className="btn btn-danger"
+          >
             Delete All
           </button>
         </div>
@@ -233,6 +250,7 @@ function App() {
           toggle={toggle}
           deleteConfirm={deleteConfirm}
           deleteBtn={deleteBtn}
+          deleteAll={deleteAll}
         />
       ) : null}
 

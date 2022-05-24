@@ -21,7 +21,20 @@ export class FormModal extends Component {
               {this.props.modal.title}
             </ModalHeader>
             <ModalBody>
-              {this.props.deleteConfirm ? (
+              {this.props.deleteConfirm.all ? (
+                <div>
+                  Delete all storage items?
+                  <br />(<i>Warning, this is irreversible</i>)
+                  <div>
+                    <Button
+                      className="btn btn-info"
+                      onClick={() => this.props.deleteAll()}
+                    >
+                      Yes, delete all my stored passwords
+                    </Button>
+                  </div>
+                </div>
+              ) : this.props.deleteConfirm.single ? (
                 <div>
                   Are you sure you want to delete your storage item for{" "}
                   <b>Username: {this.props.article.username}</b>?

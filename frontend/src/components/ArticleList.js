@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DeleteArticle from "./DeleteArticle";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
@@ -82,12 +83,13 @@ function ArticleList(props) {
                 </div>
 
                 <div className="col">
-                  <button
+                  <DeleteArticle article={article} editBtn={editBtn} />
+                  {/* <button
                     onClick={() => editBtn(article, true)}
                     className="btn btn-danger"
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </div>
               </div>
 

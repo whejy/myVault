@@ -1,25 +1,25 @@
 import "./App.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import ArticleList from "./components/ArticleList";
 import FormModal from "./components/FormModal";
+import Search from "./components/Search";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import APIService from "./APIService";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button, Container, Row, Col } from "reactstrap";
 
 function App() {
   const [articles, setArticles] = useState([]);
   const [editArticle, setEditArticle] = useState(true);
+  const [searchResults, setSearchResults] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState({
     single: false,
     all: false,
   });
-  const [searchResults, setSearchResults] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchFilter, setSearchFilter] = useState("username");
   const [modal, setModal] = useState({ isOpen: false, title: "" });
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
-  let initialRender = useRef(true);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/vault/", {
@@ -49,27 +49,22 @@ function App() {
     }
   }, [token]);
 
-  // Update Search results as user modifies query. Ignore on initial page render.
-  useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-    } else {
-      Search();
-    }
-  }, [searchFilter, searchQuery, articles]);
+  // // Update Search results as user modifies query. Ignore on initial page render.
+  // useEffect(() => {
+  //   if (initialRender.current) {
+  //     initialRender.current = false;
+  //   } else {
+  //     Search();
+  //   }
+  // }, [searchFilter, searchQuery, articles]);
 
   // Store user's search filter
-  const handleSearchFilter = (selector) => {
-    setSearchFilter(selector);
-  };
+  // const handleSearchFilter = (selector) => {
+  //   setSearchFilter(selector);
+  // };
 
-  // Store user's search query
-  const handleSearchQuery = (query) => {
-    setSearchQuery(query);
-  };
-
-  // Allows user to search for an article using radio button filters
-  const Search = () => {
+  // Allow user to search for an article and filter search with radio buttons
+  const handleSearchResults = (searchQuery, searchFilter) => {
     if (searchQuery) {
       setSearchResults(
         articles.filter((article) =>
@@ -84,6 +79,27 @@ function App() {
     }
   };
 
+  // // Store user's search query
+  // const handleSearchQuery = (query) => {
+  //   setSearchQuery(query);
+  // };
+
+  // Allows user to search for an article using radio button filters
+  // const Search = () => {
+  //   if (searchQuery) {
+  //     setSearchResults(
+  //       articles.filter((article) =>
+  //         article[searchFilter]
+  //           .toLowerCase()
+  //           .includes(searchQuery.toLowerCase())
+  //       )
+  //     );
+  //     // If user erases search input, trigger render of original article list
+  //   } else {
+  //     setSearchResults(null);
+  //   }
+  // };
+
   // Edit an article
   const editBtn = (article) => {
     setEditArticle(article);
@@ -91,9 +107,7 @@ function App() {
 
   // User deletes all storage items at once
   const deleteAll = () => {
-    APIService.DeleteAll(token["mytoken"])
-      .then(() => console.log("Deleted All"))
-      .catch((error) => console.log(error));
+    APIService.DeleteAll(token["mytoken"]).catch((error) => console.log(error));
 
     setArticles([]);
     toggle();
@@ -115,15 +129,15 @@ function App() {
     setArticles(new_articles);
 
     // If on search results page, refresh results
-    if (searchResults) {
-      const new_articles = searchResults.filter((myarticle) => {
-        if (myarticle.id === article.id) {
-          return false;
-        }
-        return true;
-      });
-      setSearchResults(new_articles);
-    }
+    // if (searchResults) {
+    //   const new_articles = searchResults.filter((myarticle) => {
+    //     if (myarticle.id === article.id) {
+    //       return false;
+    //     }
+    //     return true;
+    //   });
+    //   setSearchResults(new_articles);
+    // }
 
     toggle();
   };
@@ -184,12 +198,16 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col">
+    <Container>
+      <Row>
+        <Col>
           <h1>My Vault</h1>
           <br />
           <br />
+          <Search
+            articles={articles}
+            handleSearchResults={handleSearchResults}
+          />
           <ArticleList
             vis={vis}
             articles={searchResults ? searchResults : articles}
@@ -198,49 +216,38 @@ function App() {
             deleteConfirm={deleteConfirm}
             setDeleteConfirm={setDeleteConfirm}
           />
-        </div>
+        </Col>
 
-        <div className="col">
-          <button onClick={articleForm} className="btn btn-primary">
+        <Col>
+          <Button
+            color="success"
+            onClick={articleForm}
+            className="btn btn-primary"
+          >
             New Entry
-          </button>
-        </div>
+          </Button>
+        </Col>
 
-        <div className="col">
-          <input
-            placeholder="Search"
-            onChange={(e) => handleSearchQuery(e.target.value)}
-          />
-          <div onChange={(e) => handleSearchFilter(e.target.value)}>
-            <input
-              defaultChecked="checked"
-              type="radio"
-              value="username"
-              name="search-query"
-            />{" "}
-            Username
-            <input type="radio" value="description" name="search-query" />
-            Description
-            <input type="radio" value="url" name="search-query" /> URL
-          </div>
-        </div>
-
-        <div className="col">
-          <button onClick={logoutBtn} className="btn btn-primary">
+        <Col>
+          <Button
+            color="secondary"
+            onClick={logoutBtn}
+            className="btn btn-primary"
+          >
             Logout
-          </button>
-        </div>
-        <div className="col">
-          <button
+          </Button>
+        </Col>
+        <Col>
+          <Button
             onClick={() => {
               toggle("Delete ALL", false, true);
             }}
             className="btn btn-danger"
           >
             Delete All
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Col>
+      </Row>
       {editArticle ? (
         <FormModal
           article={editArticle}
@@ -257,7 +264,7 @@ function App() {
       {/* <MyContext.Provider value="Passed down value">
         <CompA />
       </MyContext.Provider> */}
-    </div>
+    </Container>
   );
 }
 

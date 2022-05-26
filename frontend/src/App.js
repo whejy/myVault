@@ -1,12 +1,10 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import ArticleList from "./components/ArticleList";
 import FormModal from "./components/FormModal";
 import Search from "./components/Search";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import APIService from "./APIService";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col } from "reactstrap";
 
 function App() {
@@ -20,6 +18,7 @@ function App() {
   const [modal, setModal] = useState({ isOpen: false, title: "" });
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
+  const TokenContext = createContext();
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/vault/", {
@@ -106,28 +105,39 @@ function App() {
   };
 
   // User deletes all storage items at once
-  const deleteAll = () => {
-    APIService.DeleteAll(token["mytoken"]).catch((error) => console.log(error));
+  // const deleteAll = () => {
+  //   APIService.DeleteAll(token["mytoken"]).catch((error) => console.log(error));
 
-    setArticles([]);
-    toggle();
+  //   setArticles([]);
+  //   toggle();
+  // };
+
+  const handleArticleList = (article) => {
+    let new_articles = [];
+    if (article) {
+      new_articles = articles.filter((myarticle) => {
+        if (myarticle.id === article.id) {
+          return false;
+        }
+        return true;
+      });
+    }
+
+    setArticles(new_articles);
   };
 
   // Delete an article then refresh article list
   const deleteBtn = (article) => {
-    APIService.DeleteArticle(article.id, token["mytoken"])
-      .then(() => console.log(article))
-      .catch((error) => console.log(error));
-
-    const new_articles = articles.filter((myarticle) => {
-      if (myarticle.id === article.id) {
-        return false;
-      }
-      return true;
-    });
-
-    setArticles(new_articles);
-
+    // APIService.DeleteArticle(article.id, token["mytoken"])
+    //   .then(() => console.log(article))
+    //   .catch((error) => console.log(error));
+    // const new_articles = articles.filter((myarticle) => {
+    //   if (myarticle.id === article.id) {
+    //     return false;
+    //   }
+    //   return true;
+    // });
+    // setArticles(new_articles);
     // If on search results page, refresh results
     // if (searchResults) {
     //   const new_articles = searchResults.filter((myarticle) => {
@@ -138,8 +148,7 @@ function App() {
     //   });
     //   setSearchResults(new_articles);
     // }
-
-    toggle();
+    // toggle();
   };
 
   // Toggle password visibility on page and refresh article list
@@ -208,41 +217,37 @@ function App() {
             articles={articles}
             handleSearchResults={handleSearchResults}
           />
-          <ArticleList
-            vis={vis}
-            articles={searchResults ? searchResults : articles}
-            editBtn={editBtn}
-            toggle={toggle}
-            deleteConfirm={deleteConfirm}
-            setDeleteConfirm={setDeleteConfirm}
-          />
+          <TokenContext.Provider value={token}>
+            <ArticleList
+              // token={token}
+              vis={vis}
+              articles={searchResults ? searchResults : articles}
+              editBtn={editBtn}
+              toggle={toggle}
+              deleteConfirm={deleteConfirm}
+              setDeleteConfirm={setDeleteConfirm}
+              handleArticleList={handleArticleList}
+            />
+          </TokenContext.Provider>
         </Col>
 
         <Col>
-          <Button
-            color="success"
-            onClick={articleForm}
-            className="btn btn-primary"
-          >
+          <Button color="success" onClick={articleForm}>
             New Entry
           </Button>
         </Col>
 
         <Col>
-          <Button
-            color="secondary"
-            onClick={logoutBtn}
-            className="btn btn-primary"
-          >
+          <Button color="secondary" onClick={logoutBtn}>
             Logout
           </Button>
         </Col>
         <Col>
           <Button
+            color="danger"
             onClick={() => {
               toggle("Delete ALL", false, true);
             }}
-            className="btn btn-danger"
           >
             Delete All
           </Button>
@@ -257,7 +262,7 @@ function App() {
           toggle={toggle}
           deleteConfirm={deleteConfirm}
           deleteBtn={deleteBtn}
-          deleteAll={deleteAll}
+          // deleteAll={deleteAll}
         />
       ) : null}
 

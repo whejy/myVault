@@ -1,27 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
+import { Button } from "reactstrap";
 import MyModal from "./MyModal";
 
-function DeleteArticle(props) {
+function DeleteAll(props) {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState({ title: "", body: "" });
 
   const handleModal = () => {
     setModalContent({
-      title: "Delete Storage Item?",
-      body: `Are you sure you want to delete your storage item for username: ${props.article.username}?`,
+      title: "Delete All Storage?",
+      body: "Are you sure you want to delete all storage items? This cannot be undone.",
     });
     setModal(!modal);
   };
-
   return (
     <div>
-      <button onClick={handleModal} className="btn btn-danger">
-        Delete
-      </button>
-
+      <Button onClick={handleModal} color="danger">
+        Delete All
+      </Button>
       {modal ? (
         <MyModal
-          article={props.article}
           handleModal={handleModal}
           title={modalContent.title}
           body={modalContent.body}
@@ -33,4 +32,4 @@ function DeleteArticle(props) {
   );
 }
 
-export default DeleteArticle;
+export default DeleteAll;

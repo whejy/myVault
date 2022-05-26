@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DeleteArticle from "./DeleteArticle";
+import DeleteAll from "./DeleteAll";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
@@ -27,6 +28,10 @@ function ArticleList(props) {
 
   return (
     <div>
+      <DeleteAll
+        // token={props.token}
+        handleArticleList={props.handleArticleList}
+      />
       {props.articles.length < 1 && (
         <span id="empty-search">Sorry, we couldn't find any results.</span>
       )}
@@ -83,7 +88,12 @@ function ArticleList(props) {
                 </div>
 
                 <div className="col">
-                  <DeleteArticle article={article} editBtn={editBtn} />
+                  <DeleteArticle
+                    // token={props.token}
+                    article={article}
+                    editBtn={editBtn}
+                    handleArticleList={props.handleArticleList}
+                  />
                   {/* <button
                     onClick={() => editBtn(article, true)}
                     className="btn btn-danger"

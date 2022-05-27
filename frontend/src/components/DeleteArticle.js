@@ -25,7 +25,6 @@ function DeleteArticle(props) {
           handleModal={handleModal}
           title={modalContent.title}
           body={modalContent.body}
-          //   token={props.token}
           handleArticleList={props.handleArticleList}
         />
       ) : null}

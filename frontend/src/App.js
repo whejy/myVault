@@ -1,11 +1,12 @@
 import "./App.css";
-import React, { createContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ArticleList from "./components/ArticleList";
 import FormModal from "./components/FormModal";
 import Search from "./components/Search";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Row, Col } from "reactstrap";
+import { TokenContext } from "./TokenContext";
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -18,7 +19,6 @@ function App() {
   const [modal, setModal] = useState({ isOpen: false, title: "" });
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
-  const TokenContext = createContext();
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/vault/", {
@@ -219,7 +219,6 @@ function App() {
           />
           <TokenContext.Provider value={token}>
             <ArticleList
-              // token={token}
               vis={vis}
               articles={searchResults ? searchResults : articles}
               editBtn={editBtn}

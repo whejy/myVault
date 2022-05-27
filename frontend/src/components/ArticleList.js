@@ -28,10 +28,7 @@ function ArticleList(props) {
 
   return (
     <div>
-      <DeleteAll
-        // token={props.token}
-        handleArticleList={props.handleArticleList}
-      />
+      <DeleteAll handleArticleList={props.handleArticleList} />
       {props.articles.length < 1 && (
         <span id="empty-search">Sorry, we couldn't find any results.</span>
       )}
@@ -89,17 +86,10 @@ function ArticleList(props) {
 
                 <div className="col">
                   <DeleteArticle
-                    // token={props.token}
                     article={article}
                     editBtn={editBtn}
                     handleArticleList={props.handleArticleList}
                   />
-                  {/* <button
-                    onClick={() => editBtn(article, true)}
-                    className="btn btn-danger"
-                  >
-                    Delete
-                  </button> */}
                 </div>
               </div>
 

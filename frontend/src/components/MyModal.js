@@ -1,4 +1,4 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import APIService from "../APIService";
 import {
   Button,
@@ -10,18 +10,17 @@ import {
   Input,
   Label,
 } from "reactstrap";
+import { TokenContext } from "../TokenContext";
 
 export class MyModal extends Component {
   deleteConfirm = (article = null) => {
-    console.log(this.mycontext);
+    let token = this.context.mytoken;
     if (article) {
-      APIService.DeleteArticle(article.id, this.props.token.mytoken)
+      APIService.DeleteArticle(article.id, token)
         .then(() => console.log(article))
         .catch((error) => console.log(error));
     } else {
-      APIService.DeleteAll(this.props.token.mytoken).catch((error) =>
-        console.log(error)
-      );
+      APIService.DeleteAll(token).catch((error) => console.log(error));
     }
     this.props.handleModal();
     this.props.handleArticleList(article);
@@ -54,5 +53,5 @@ export class MyModal extends Component {
     );
   }
 }
-
+MyModal.contextType = TokenContext;
 export default MyModal;

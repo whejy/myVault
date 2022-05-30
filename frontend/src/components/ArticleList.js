@@ -1,20 +1,11 @@
 import React, { useState } from "react";
+import EditArticle from "./EditArticle";
 import DeleteArticle from "./DeleteArticle";
 import DeleteAll from "./DeleteAll";
+import NewArticle from "./NewArticle";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
-
-  //   Edit an article and reset copied password
-  const editBtn = (article, deleteCheck = null) => {
-    setIsActive(null);
-    if (deleteCheck) {
-      props.toggle("Confirm Delete", deleteCheck);
-    } else {
-      props.toggle("Update Item");
-    }
-    props.editBtn(article);
-  };
 
   //   Send to App password to be hidden
   const vis = (article) => {
@@ -28,7 +19,6 @@ function ArticleList(props) {
 
   return (
     <div>
-      <DeleteAll handleArticleList={props.handleArticleList} />
       {props.articles.length < 1 && (
         <span id="empty-search">Sorry, we couldn't find any results.</span>
       )}
@@ -76,18 +66,15 @@ function ArticleList(props) {
 
               <div className="row">
                 <div className="col-md-1">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => editBtn(article)}
-                  >
-                    Update
-                  </button>
+                  <EditArticle
+                    article={article}
+                    handleArticleList={props.handleArticleList}
+                  />
                 </div>
 
                 <div className="col">
                   <DeleteArticle
                     article={article}
-                    editBtn={editBtn}
                     handleArticleList={props.handleArticleList}
                   />
                 </div>

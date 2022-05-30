@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import APIService from "../APIService";
+import Form from "./Form";
 import {
   Button,
   Modal,
@@ -10,11 +11,21 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import { TokenContext } from "../TokenContext";
+import { withCookies } from "react-cookie";
+// import { TokenContext } from "../TokenContext";
 
 export class MyModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: this.props.cookies.get("mytoken"),
+    };
+  }
+
   deleteConfirm = (article = null) => {
-    let token = this.context.mytoken;
+    // let token = this.context.mytoken;
+    let token = this.state.token;
+
     if (article) {
       APIService.DeleteArticle(article.id, token)
         .then(() => console.log(article))
@@ -22,8 +33,9 @@ export class MyModal extends Component {
     } else {
       APIService.DeleteAll(token).catch((error) => console.log(error));
     }
+
     this.props.handleModal();
-    this.props.handleArticleList(article);
+    this.props.handleArticleList(article, "delete");
   };
 
   render() {
@@ -33,7 +45,17 @@ export class MyModal extends Component {
           <ModalHeader toggle={this.props.handleModal}>
             {this.props.title}
           </ModalHeader>
-          <ModalBody>{this.props.body}</ModalBody>
+          <ModalBody>
+            {this.props.body ? (
+              this.props.body
+            ) : (
+              <Form
+                handleModal={this.props.handleModal}
+                article={this.props.article}
+                handleArticleList={this.props.handleArticleList}
+              />
+            )}
+          </ModalBody>
           <ModalFooter>
             {this.props.article ? (
               <Button
@@ -53,5 +75,5 @@ export class MyModal extends Component {
     );
   }
 }
-MyModal.contextType = TokenContext;
-export default MyModal;
+// MyModal.contextType = TokenContext;
+export default withCookies(MyModal);

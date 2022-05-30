@@ -23,7 +23,7 @@ function Form(props) {
 
   const updateArticle = () => {
     if (username && password) {
-      props.toggle("");
+      props.handleModal();
       APIService.UpdateArticle(
         props.article.id,
         {
@@ -33,7 +33,7 @@ function Form(props) {
           url,
         },
         token["mytoken"]
-      ).then((resp) => props.updatedInformation(resp));
+      ).then((resp) => props.handleArticleList(resp, "update"));
     } else {
       setFormError({ username: !username, password: !password });
     }
@@ -41,11 +41,11 @@ function Form(props) {
 
   const insertArticle = () => {
     if (username && password) {
-      props.toggle("");
+      props.handleModal();
       APIService.InsertArticle(
         { username, password, description, url },
         token["mytoken"]
-      ).then((resp) => props.insertedInformation(resp));
+      ).then((resp) => props.handleArticleList(resp, "insert"));
       setUsername("");
       setPassword("");
       setUrl("");

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import APIService from "../APIService";
-import Form from "./Form";
 import {
   Button,
   Modal,
@@ -45,17 +44,7 @@ export class MyModal extends Component {
           <ModalHeader toggle={this.props.handleModal}>
             {this.props.title}
           </ModalHeader>
-          <ModalBody>
-            {this.props.body ? (
-              this.props.body
-            ) : (
-              <Form
-                handleModal={this.props.handleModal}
-                article={this.props.article}
-                handleArticleList={this.props.handleArticleList}
-              />
-            )}
-          </ModalBody>
+          <ModalBody>{this.props.body}</ModalBody>
           <ModalFooter>
             {this.props.article ? (
               <Button

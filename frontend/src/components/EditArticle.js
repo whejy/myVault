@@ -1,22 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
-import MyModal from "./MyModal";
+import FormModal from "./FormModal";
 
 function EditArticle(props) {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState({ title: "", body: "" });
-
-  //   const updatedInformation = (article) => {
-  //     const new_article = articles.map((myarticle) => {
-  //       if (myarticle.id === article.id) {
-  //         return article;
-  //       } else {
-  //         return myarticle;
-  //       }
-  //     });
-
-  //     setArticles(new_article);
-  //   };
 
   const handleModal = () => {
     setModalContent({
@@ -31,9 +19,8 @@ function EditArticle(props) {
         Update
       </Button>
       {modal ? (
-        <MyModal
+        <FormModal
           title={modalContent.title}
-          body={modalContent.body}
           handleModal={handleModal}
           article={props.article}
           handleArticleList={props.handleArticleList}

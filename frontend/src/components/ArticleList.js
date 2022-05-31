@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import EditArticle from "./EditArticle";
 import DeleteArticle from "./DeleteArticle";
-import DeleteAll from "./DeleteAll";
-import NewArticle from "./NewArticle";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
 
-  //   Send to App password to be hidden
-  const vis = (article) => {
-    props.vis(article);
+  // Toggle password visibility
+  const togglePassword = (article) => {
+    const new_article = props.articles.map((myarticle) => {
+      if (myarticle.id === article.id) {
+        article.visibility = !article.visibility;
+        return article;
+      } else {
+        return myarticle;
+      }
+    });
+    props.handleArticleList(new_article, "update");
   };
 
-  //   Hide password function which runs when article.visibility = false
   function hidePassword(password) {
-    return password.split("").map((letter) => "*");
+    return password.split("").map(() => "*");
   }
 
   return (
@@ -49,10 +54,10 @@ function ArticleList(props) {
                   {isActive == article.id ? "Copied!" : "Copy to Clipboard"}
                 </button>
                 <button
-                  onClick={() => vis(article)}
+                  onClick={() => togglePassword(article)}
                   className="btn btn-primary"
                 >
-                  Show
+                  {article.visibility ? <span>Hide</span> : <span>Show</span>}
                 </button>
               </span>
               {article.description && <p>Description: {article.description}</p>}

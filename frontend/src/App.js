@@ -4,6 +4,7 @@ import ArticleList from "./components/ArticleList";
 import NewArticle from "./components/NewArticle";
 import DeleteAll from "./components/DeleteAll";
 import Search from "./components/Search";
+import Logout from "./components/Logout";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Row, Col } from "reactstrap";
@@ -15,6 +16,7 @@ function App() {
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
 
+  // Fetch article list on page load
   useEffect(() => {
     fetch("http://127.0.0.1:8000/vault/", {
       method: "GET",
@@ -90,55 +92,37 @@ function App() {
     }
   };
 
-  // Toggle password visibility on page and refresh article list
-  const vis = (article) => {
-    const new_article = articles.map((myarticle) => {
-      if (myarticle.id === article.id) {
-        article.visibility = !article.visibility;
-        return article;
-      } else {
-        return myarticle;
-      }
-    });
-    setArticles(new_article);
-  };
-
-  const logoutBtn = () => {
-    removeToken(["mytoken"]);
-  };
-
   return (
     <Container>
       <Row>
-        <Col>
+        <Col style={{ backgroundColor: "blue" }}>
           <h1>My Vault</h1>
           <br />
           <br />
         </Col>
-        <Col>
+      </Row>
+      <Row className="align-items-center">
+        <Col style={{ backgroundColor: "" }}>
           <Search
             articles={articles}
             handleSearchResults={handleSearchResults}
           />
         </Col>
-        <Col>
+        <Col style={{ backgroundColor: "yellow", className: "text-center" }}>
           <NewArticle handleArticleList={handleArticleList} />
         </Col>
-        <Col>
+        <Col style={{ backgroundColor: "red" }}>
           <DeleteAll handleArticleList={handleArticleList} />
         </Col>
 
-        <Col>
-          <Button color="primary" onClick={logoutBtn}>
-            Logout
-          </Button>
+        <Col style={{ backgroundColor: "brown" }}>
+          <Logout />
         </Col>
       </Row>
       <Row>
         <Col>
           {/* <TokenContext.Provider value={token}> */}
           <ArticleList
-            vis={vis}
             articles={searchResults ? searchResults : articles}
             handleArticleList={handleArticleList}
           />

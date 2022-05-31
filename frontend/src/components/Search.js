@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Input } from "reactstrap";
 import Filter from "./Filter";
 
 function Search(props) {
@@ -33,7 +34,7 @@ function Search(props) {
   return (
     <div>
       <div>
-        <input
+        <Input
           placeholder="Search"
           onChange={(e) => handleSearchQuery(e.target.value)}
         />

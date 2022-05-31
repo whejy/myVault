@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Form from "./components/Form";
+// import Form from "./components/Form";
 import Login from "./components/Login";
 import { CookiesProvider } from "react-cookie";
 
@@ -16,7 +16,7 @@ function Router() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/vault" element={<App />} />
-          <Route path="/login" element={<Form />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </CookiesProvider>

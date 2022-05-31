@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MyModal from "./MyModal";
+import DeleteModal from "./DeleteModal";
 
 function DeleteArticle(props) {
   const [modal, setModal] = useState(false);
@@ -20,7 +20,7 @@ function DeleteArticle(props) {
       </button>
 
       {modal ? (
-        <MyModal
+        <DeleteModal
           article={props.article}
           handleModal={handleModal}
           title={modalContent.title}

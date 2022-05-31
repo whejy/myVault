@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
-import MyModal from "./MyModal";
+import DeleteModal from "./DeleteModal";
 
 function DeleteAll(props) {
   const [modal, setModal] = useState(false);
@@ -20,7 +20,7 @@ function DeleteAll(props) {
         Delete All
       </Button>
       {modal ? (
-        <MyModal
+        <DeleteModal
           handleModal={handleModal}
           title={modalContent.title}
           body={modalContent.body}

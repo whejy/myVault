@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
-import MyModal from "./MyModal";
+import FormModal from "./FormModal";
 
 function DeleteAll(props) {
   const [modal, setModal] = useState(false);
@@ -23,10 +23,9 @@ function DeleteAll(props) {
         New Entry
       </Button>
       {modal ? (
-        <MyModal
-          handleModal={handleModal}
+        <FormModal
           title={modalContent.title}
-          body={modalContent.body}
+          handleModal={handleModal}
           article={article}
           handleArticleList={props.handleArticleList}
         />

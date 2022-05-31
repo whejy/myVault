@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Input, InputGroup } from "reactstrap";
 function Filter(props) {
   const handleSearchFilter = (selector) => {
     props.handleSearchFilter(selector);
@@ -8,16 +8,16 @@ function Filter(props) {
   return (
     <div>
       <div onChange={(e) => handleSearchFilter(e.target.value)}>
-        <input
+        <Input
           defaultChecked="checked"
           type="radio"
           value="username"
           name="search-query"
         />{" "}
         Username
-        <input type="radio" value="description" name="search-query" />
+        <Input type="radio" value="description" name="search-query" />
         Description
-        <input type="radio" value="url" name="search-query" /> URL
+        <Input type="radio" value="url" name="search-query" /> URL
       </div>
     </div>
   );

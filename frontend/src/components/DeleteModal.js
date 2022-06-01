@@ -58,6 +58,7 @@ export class MyModal extends Component {
                 Delete All Storage
               </Button>
             )}
+            <Button onClick={this.props.handleModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

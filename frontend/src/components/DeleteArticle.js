@@ -8,7 +8,7 @@ function DeleteArticle(props) {
   const handleModal = () => {
     setModalContent({
       title: "Delete Storage Item?",
-      body: `Are you sure you want to delete your storage item for username: ${props.article.username}?`,
+      body: "Are you sure you want to delete this item?",
     });
     setModal(!modal);
   };

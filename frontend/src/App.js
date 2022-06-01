@@ -8,7 +8,6 @@ import Logout from "./components/Logout";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Row, Col } from "reactstrap";
-// import { TokenContext } from "./TokenContext";
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -95,38 +94,36 @@ function App() {
   return (
     <Container>
       <Row>
-        <Col style={{ backgroundColor: "blue" }}>
+        <Col>
           <h1>My Vault</h1>
           <br />
           <br />
         </Col>
       </Row>
-      <Row className="align-items-center">
-        <Col style={{ backgroundColor: "" }}>
+      <Row>
+        <Col>
           <Search
             articles={articles}
             handleSearchResults={handleSearchResults}
           />
         </Col>
-        <Col style={{ backgroundColor: "yellow", className: "text-center" }}>
+        <Col>
           <NewArticle handleArticleList={handleArticleList} />
         </Col>
-        <Col style={{ backgroundColor: "red" }}>
+        <Col>
           <DeleteAll handleArticleList={handleArticleList} />
         </Col>
 
-        <Col style={{ backgroundColor: "brown" }}>
+        <Col>
           <Logout />
         </Col>
       </Row>
       <Row>
         <Col>
-          {/* <TokenContext.Provider value={token}> */}
           <ArticleList
             articles={searchResults ? searchResults : articles}
             handleArticleList={handleArticleList}
           />
-          {/* </TokenContext.Provider> */}
         </Col>
       </Row>
     </Container>

@@ -10,6 +10,7 @@ import {
   FormGroup,
   Input,
   Label,
+  Container,
 } from "reactstrap";
 
 function FormModal(props) {
@@ -140,23 +141,16 @@ function FormModal(props) {
                   setUrl(e.target.value);
                 }}
               />
-              <br />
-
-              {/* {props.article.id ? (
-            <button onClick={updateArticle} className="btn btn-success">
-              Save
-            </button>
-          ) : (
-            <button onClick={insertArticle} className="btn btn-success">
-              Add
-            </button>
-          )} */}
             </div>
           ) : null}
         </ModalBody>
         <ModalFooter>
           {props.article.id ? (
-            <Button onClick={updateArticle} color="success">
+            <Button
+              className="d-flex justify-content-center"
+              onClick={updateArticle}
+              color="success"
+            >
               Save
             </Button>
           ) : (
@@ -164,6 +158,7 @@ function FormModal(props) {
               Add
             </Button>
           )}
+          <Button onClick={props.handleModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </div>

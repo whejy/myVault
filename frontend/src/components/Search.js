@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Input } from "reactstrap";
-import Filter from "./Filter";
+import { Button, Col, Input, Row } from "reactstrap";
 
 function Search(props) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,7 +11,7 @@ function Search(props) {
     if (initialRender.current) {
       initialRender.current = false;
     } else {
-      Search();
+      search();
     }
   }, [searchFilter, searchQuery, props.articles]);
 
@@ -27,19 +26,57 @@ function Search(props) {
   };
 
   //   Send user's full search query to parent
-  const Search = () => {
+  const search = () => {
     props.handleSearchResults(searchQuery, searchFilter);
+  };
+
+  //
+  const reset = () => {
+    handleSearchQuery("");
+    handleSearchFilter("username");
   };
 
   return (
     <div>
-      <div>
-        <Input
-          placeholder="Search"
-          onChange={(e) => handleSearchQuery(e.target.value)}
-        />
+      <div id="search-container">
+        <Col>
+          <Input
+            id="search-input"
+            placeholder="Search"
+            onChange={(e) => handleSearchQuery(e.target.value)}
+            value={searchQuery}
+          />
+        </Col>
+        <Col xs={4}>
+          <Button color="danger" onClick={() => reset()}>
+            X
+          </Button>
+        </Col>
       </div>
-      <Filter handleSearchFilter={handleSearchFilter} />
+      <Input
+        checked={searchFilter === "username"}
+        onChange={(e) => handleSearchFilter(e.target.value)}
+        type="radio"
+        value="username"
+        name="search-query"
+      />
+      Username
+      <Input
+        checked={searchFilter === "description"}
+        onChange={(e) => handleSearchFilter(e.target.value)}
+        type="radio"
+        value="description"
+        name="search-query"
+      />
+      Description
+      <Input
+        checked={searchFilter === "url"}
+        onChange={(e) => handleSearchFilter(e.target.value)}
+        type="radio"
+        value="url"
+        name="search-query"
+      />
+      URL
     </div>
   );
 }

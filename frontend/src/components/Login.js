@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import APIService from "../APIService";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { Alert, Input, Col, Row } from "reactstrap";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -26,14 +27,6 @@ function Login() {
     setError("");
     setFormError({ username: false, password: false });
   }, [isLogin]);
-
-  //   useEffect(() => {
-  //     setFormError({ username: false, password: false });
-  //   }, [error]);
-
-  //   useEffect(() => {
-  //     setError("");
-  //   }, [setFormError]);
 
   const loginBtn = () => {
     if (username && password) {
@@ -71,7 +64,7 @@ function Login() {
         <label htmlFor="username" className="form-label">
           Username
         </label>
-        <input
+        <Input
           type="text"
           className="form-control"
           id="username"
@@ -79,14 +72,16 @@ function Login() {
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
-        {formError.username && <div>Please Provide a Username</div>}
+        {formError.username && (
+          <Alert color="danger">Please Provide a Username</Alert>
+        )}
       </div>
 
       <div className="mb-3">
         <label htmlFor="password" className="form-label">
           Password
         </label>
-        <input
+        <Input
           type="password"
           className="form-control"
           id="password"
@@ -94,7 +89,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        {formError.password && <div>Please Provide a Password</div>}
+        {formError.password && (
+          <Alert color="danger">Please Provide a Password</Alert>
+        )}
       </div>
 
       {error ? <div>{error.message}</div> : null}

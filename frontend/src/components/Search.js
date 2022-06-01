@@ -38,45 +38,54 @@ function Search(props) {
 
   return (
     <div>
-      <div id="search-container">
-        <Col>
+      <Row>
+        <Col xxs={4} id="search-container">
           <Input
             id="search-input"
             placeholder="Search"
             onChange={(e) => handleSearchQuery(e.target.value)}
             value={searchQuery}
           />
+          <Button
+            aria-label="Close"
+            id="search-reset"
+            className="btn-close"
+            onClick={() => reset()}
+          ></Button>
         </Col>
-        <Col xs={4}>
-          <Button color="danger" onClick={() => reset()}>
-            X
-          </Button>
-        </Col>
-      </div>
-      <Input
-        checked={searchFilter === "username"}
-        onChange={(e) => handleSearchFilter(e.target.value)}
-        type="radio"
-        value="username"
-        name="search-query"
-      />
-      Username
-      <Input
-        checked={searchFilter === "description"}
-        onChange={(e) => handleSearchFilter(e.target.value)}
-        type="radio"
-        value="description"
-        name="search-query"
-      />
-      Description
-      <Input
-        checked={searchFilter === "url"}
-        onChange={(e) => handleSearchFilter(e.target.value)}
-        type="radio"
-        value="url"
-        name="search-query"
-      />
-      URL
+      </Row>
+      <label>
+        <Input
+          checked={searchFilter === "username"}
+          onChange={(e) => handleSearchFilter(e.target.value)}
+          type="radio"
+          value="username"
+          name="search-query"
+        />{" "}
+        Username
+      </label>
+      <br />
+      <label>
+        <Input
+          checked={searchFilter === "description"}
+          onChange={(e) => handleSearchFilter(e.target.value)}
+          type="radio"
+          value="description"
+          name="search-query"
+        />{" "}
+        Description
+      </label>
+      <br />
+      <label>
+        <Input
+          checked={searchFilter === "url"}
+          onChange={(e) => handleSearchFilter(e.target.value)}
+          type="radio"
+          value="url"
+          name="search-query"
+        />{" "}
+        URL
+      </label>
     </div>
   );
 }

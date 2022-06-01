@@ -94,14 +94,18 @@ function App() {
   return (
     <Container>
       <Row>
-        <Col>
+        <Col style={{ backgroundColor: "red" }}>
           <h1>My Vault</h1>
           <br />
           <br />
         </Col>
+
+        <Col style={{ backgroundColor: "blue" }}>
+          <Logout />
+        </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="col-4">
           <Search
             articles={articles}
             handleSearchResults={handleSearchResults}
@@ -110,12 +114,10 @@ function App() {
         <Col>
           <NewArticle handleArticleList={handleArticleList} />
         </Col>
+      </Row>
+      <Row>
         <Col>
           <DeleteAll handleArticleList={handleArticleList} />
-        </Col>
-
-        <Col>
-          <Logout />
         </Col>
       </Row>
       <Row>

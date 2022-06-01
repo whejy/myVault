@@ -1,19 +1,28 @@
-
 #search-container {
-  /* This bit sets up the horizontal layout */
-  display:flex;
-  flex-direction:row;
-  
-  /* I've used padding so you can see the edges of the elements. */
-  padding:2px;
+  position: relative;
+}
+
+#search-reset {
+  position: absolute;
+  right: 20px;
+  top: 20%;
 }
 
 #search-input {
-  /* Tell the input to use all the available space */
-  flex-grow:2;
-  /* And hide the input's outline, so the form looks like the outline */
+  padding-right: 35px;
 }
 
+#search-reset:hover {
+  background-color: unset;
+  opacity: .5;
+}
+
+#search-reset:focus {
+  background-color: unset;
+  outline-color: white;
+  box-shadow: none;
+  opacity: .5;
+}
 
 .fake-link {
   color: blue;

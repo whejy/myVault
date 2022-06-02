@@ -42,7 +42,7 @@ function Search(props) {
         <Col xxs={4} id="search-container">
           <Input
             id="search-input"
-            placeholder="Search"
+            placeholder="Search..."
             onChange={(e) => handleSearchQuery(e.target.value)}
             value={searchQuery}
           />

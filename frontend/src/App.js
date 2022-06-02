@@ -94,13 +94,13 @@ function App() {
   return (
     <Container>
       <Row>
-        <Col style={{ backgroundColor: "red" }}>
-          <h1>My Vault</h1>
+        <Col tag={"h1"}>
+          My Vault
           <br />
           <br />
         </Col>
 
-        <Col style={{ backgroundColor: "blue" }}>
+        <Col className="d-flex justify-content-end">
           <Logout />
         </Col>
       </Row>

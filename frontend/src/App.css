@@ -1,3 +1,27 @@
+.copy-hide-buttons {
+  padding: 15px 10px 15px 10px;
+  user-select: none;
+}
+
+#copy-button {
+cursor: copy;
+}
+
+#card-whole {
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+#card-body {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+
+#hidepassword-button {
+  cursor: pointer;
+}
+
 #search-container {
   position: relative;
 }

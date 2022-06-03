@@ -8,6 +8,7 @@ import Logout from "./components/Logout";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Row, Col } from "reactstrap";
+import randomColor from "randomcolor";
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -27,9 +28,12 @@ function App() {
       .then((resp) => resp.json())
       .then((resp) =>
         setArticles(
-          // Add password visibility state
+          // Add password visibility state and random color for card decoration
           resp.map((el) => {
             el.visibility = false;
+            if (!el.url) {
+              el.color = randomColor({ format: "rgba", alpha: 0.25 });
+            }
             return el;
           })
         )
@@ -114,8 +118,6 @@ function App() {
         <Col>
           <NewArticle handleArticleList={handleArticleList} />
         </Col>
-      </Row>
-      <Row>
         <Col>
           <DeleteAll handleArticleList={handleArticleList} />
         </Col>

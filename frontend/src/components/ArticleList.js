@@ -16,6 +16,8 @@ import {
 } from "reactstrap";
 import { FaCopy, FaRegCopy } from "react-icons/fa";
 import { BiHide, BiShow } from "react-icons/bi";
+import { ImHappy } from "react-icons/im";
+import randomColor from "randomcolor";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
@@ -37,6 +39,16 @@ function ArticleList(props) {
     return password.split("").map(() => "*");
   }
 
+  // function calculate(articles) {
+  //   var test = [];
+  //   for (let i = 0; i < articles.length; i += 2) {
+  //     const chunk = articles.slice(i, i + 2);
+  //     test.push(chunk);
+  //   }
+  //   return test
+  //   return Math.ceil(articles.length / 2);
+  // }
+
   return (
     <div>
       {props.articles.length < 1 && (
@@ -48,9 +60,21 @@ function ArticleList(props) {
             <div key={article.id}>
               <Container className="justify-content-center">
                 <Row className="justify-content-center">
-                  <Col xs={"9"}>
+                  <Col
+                    xs={"10"}
+                    sm={"9"}
+                    md={"8"}
+                    lg={"6"}
+                    xl={"5"}
+                    xxl={"4.5"}
+                  >
                     <Card id="card-whole" body color="secondary" outline>
-                      <CardHeader>
+                      <CardHeader
+                        className="card-header-footer"
+                        style={{
+                          backgroundColor: article.color,
+                        }}
+                      >
                         <Row>
                           <Col
                             sm={"9"}
@@ -62,7 +86,7 @@ function ArticleList(props) {
                           </Col>
                           <Col
                             sm={"3"}
-                            className="d-flex justify-content-center"
+                            className="d-flex justify-content-center justify-content-sm-end"
                           >
                             <span
                               title="Copy Password"
@@ -111,7 +135,7 @@ function ArticleList(props) {
                           xs={"6"}
                           className="d-flex justify-content-center align-items-center"
                         >
-                          {article.url && (
+                          {article.url ? (
                             <p>
                               <a
                                 href={article.url}
@@ -124,19 +148,24 @@ function ArticleList(props) {
                                 ></img>
                               </a>
                             </p>
+                          ) : (
+                            <ImHappy color={article.color} size={"5em"} />
                           )}
                         </Col>
                       </CardBody>
-                      <CardFooter>
-                        <Container className="d-flex justify-content-end">
+                      <CardFooter
+                        className="card-header-footer"
+                        style={{ backgroundColor: article.color }}
+                      >
+                        <Container className="d-flex  justify-content-center justify-content-md-end">
                           <Row>
-                            <Col className="d-flex justify-content-center">
+                            <Col>
                               <EditArticle
                                 article={article}
                                 handleArticleList={props.handleArticleList}
                               />
                             </Col>
-                            <Col className="d-flex justify-content-center">
+                            <Col>
                               <DeleteArticle
                                 article={article}
                                 handleArticleList={props.handleArticleList}

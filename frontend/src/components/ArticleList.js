@@ -60,14 +60,7 @@ function ArticleList(props) {
             <div key={article.id}>
               <Container className="justify-content-center">
                 <Row className="justify-content-center">
-                  <Col
-                    xs={"10"}
-                    sm={"9"}
-                    md={"8"}
-                    lg={"6"}
-                    xl={"5"}
-                    xxl={"4.5"}
-                  >
+                  <Col>
                     <Card id="card-whole" body color="secondary" outline>
                       <CardHeader
                         className="card-header-footer"
@@ -90,8 +83,7 @@ function ArticleList(props) {
                           >
                             <span
                               title="Copy Password"
-                              className="copy-hide-buttons"
-                              id="copy-button"
+                              className="card-icons"
                               onClick={() => {
                                 navigator.clipboard.writeText(article.password);
                                 setIsActive(article.id);
@@ -104,8 +96,7 @@ function ArticleList(props) {
                               )}
                             </span>
                             <span
-                              id="hidepassword-button"
-                              className="copy-hide-buttons"
+                              className="card-icons"
                               onClick={() => togglePassword(article)}
                               color="primary"
                             >
@@ -122,14 +113,16 @@ function ArticleList(props) {
                         id="card-body"
                         className="d-flex justify-content-center"
                       >
-                        <Col xs={"6"} tag={"h2"}>
-                          Username: {article.username}
+                        <Col xs={"6"}>
+                          <span className="card-body-titles">Username:</span>{" "}
+                          <h3>{article.username}</h3>
                           <br />
-                          <br />
-                          Password:{" "}
-                          {article.visibility
-                            ? article.password
-                            : hidePassword(article.password)}
+                          <span className="card-body-titles">Password: </span>
+                          <h3>
+                            {article.visibility
+                              ? article.password
+                              : hidePassword(article.password)}
+                          </h3>
                         </Col>
                         <Col
                           xs={"6"}
@@ -157,22 +150,26 @@ function ArticleList(props) {
                         className="card-header-footer"
                         style={{ backgroundColor: article.color }}
                       >
-                        <Container className="d-flex  justify-content-center justify-content-md-end">
-                          <Row>
-                            <Col>
-                              <EditArticle
-                                article={article}
-                                handleArticleList={props.handleArticleList}
-                              />
-                            </Col>
-                            <Col>
-                              <DeleteArticle
-                                article={article}
-                                handleArticleList={props.handleArticleList}
-                              />
-                            </Col>
-                          </Row>
-                        </Container>
+                        <Row>
+                          <Col
+                            sm={"9"}
+                            className="d-flex align-items-center justify-content-center justify-content-sm-start"
+                          ></Col>
+                          <Col
+                            sm={"3"}
+                            className="d-flex justify-content-center justify-content-sm-end"
+                          >
+                            <EditArticle
+                              outline
+                              article={article}
+                              handleArticleList={props.handleArticleList}
+                            />
+                            <DeleteArticle
+                              article={article}
+                              handleArticleList={props.handleArticleList}
+                            />
+                          </Col>
+                        </Row>
                       </CardFooter>
                     </Card>
                   </Col>

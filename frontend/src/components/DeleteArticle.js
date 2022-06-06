@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import DeleteModal from "./DeleteModal";
+import { Button } from "reactstrap";
+import { RiDeleteBack2Fill } from "react-icons/ri";
 
 function DeleteArticle(props) {
   const [modal, setModal] = useState(false);
@@ -15,9 +17,9 @@ function DeleteArticle(props) {
 
   return (
     <div>
-      <button onClick={handleModal} className="btn btn-danger">
-        Delete
-      </button>
+      <span title="Delete" className="card-icons" onClick={handleModal}>
+        <RiDeleteBack2Fill size={"1.5em"} color="red" />
+      </span>
 
       {modal ? (
         <DeleteModal

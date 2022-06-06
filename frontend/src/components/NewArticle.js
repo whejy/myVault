@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
+import { MdOutlineLibraryAdd } from "react-icons/md";
 import FormModal from "./FormModal";
 
 function DeleteAll(props) {
@@ -19,9 +20,11 @@ function DeleteAll(props) {
 
   return (
     <div>
-      <Button onClick={handleModal} color="success">
-        New Entry
-      </Button>
+      <span title="Add New" className="card-icons" onClick={handleModal}>
+        <Button color="success">
+          <MdOutlineLibraryAdd size={"1.5em"} />
+        </Button>
+      </span>
       {modal ? (
         <FormModal
           title={modalContent.title}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
+import { RiEdit2Fill } from "react-icons/ri";
 import FormModal from "./FormModal";
 
 function EditArticle(props) {
@@ -15,9 +16,9 @@ function EditArticle(props) {
   };
   return (
     <div>
-      <Button onClick={handleModal} color="primary">
-        Update
-      </Button>
+      <span title="Edit" className="card-icons" onClick={handleModal}>
+        <RiEdit2Fill size={"1.5em"} />
+      </span>
       {modal ? (
         <FormModal
           title={modalContent.title}

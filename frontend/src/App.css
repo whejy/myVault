@@ -1,19 +1,39 @@
-.copy-hide-buttons {
+body {
+  background: rgb(174,208,238);
+  background: radial-gradient(circle, rgba(174,208,238,1) 9%, rgba(48,129,223,1) 100%);  
+}
+
+#app-title 
+  { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 15vw; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+
+
+
+.card-icons {
   padding: 15px 10px 15px 10px;
   user-select: none;
+  cursor: pointer;
+
 }
 
 .card-header-footer {
   border-radius: 10px !important;
 }
 
-#copy-button {
-cursor: copy;
+.card-body-titles {
+  text-decoration: dashed;
+  font-style: oblique;
+  font-weight: lighter;
 }
+
+
+.icons-footer {
+  padding-right: 45px;
+}
+
 
 #card-whole {
   border-radius: 15px;
-  box-shadow: 5px 5px 20px grey;
+  box-shadow: 5px 5px 20px black;
 }
 
 #card-body {
@@ -21,10 +41,6 @@ cursor: copy;
   padding-bottom: 30px;
 }
 
-
-#hidepassword-button {
-  cursor: pointer;
-}
 
 #search-container {
   position: relative;
@@ -61,4 +77,17 @@ cursor: copy;
 .fake-link:hover {
   text-decoration: underline;
   color: #4d7ae3;
+}
+
+.padding-0{
+  padding-right:0;
+  padding-left:0;
+}
+
+.container-space {
+  margin-top: 15px;
+}
+
+.radio-button-label {
+  margin-right: 20px;
 }

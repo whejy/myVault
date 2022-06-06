@@ -32,7 +32,7 @@ function App() {
           resp.map((el) => {
             el.visibility = false;
             if (!el.url) {
-              el.color = randomColor({ format: "rgba", alpha: 0.25 });
+              el.color = randomColor({ format: "rgba", alpha: 0.5 });
             }
             return el;
           })
@@ -91,6 +91,7 @@ function App() {
     }
 
     if (action === "insert") {
+      article.color = randomColor({ format: "rgba", alpha: 0.25 });
       setArticles([article, ...articles]);
     }
   };
@@ -98,38 +99,41 @@ function App() {
   return (
     <Container>
       <Row>
-        <Col tag={"h1"}>
-          My Vault
-          <br />
-          <br />
-        </Col>
-
+        <div id="app-title">myVault.</div>
+      </Row>
+      <Row>
         <Col className="d-flex justify-content-end">
           <Logout />
         </Col>
       </Row>
       <Row>
-        <Col className="col-4">
-          <Search
-            articles={articles}
-            handleSearchResults={handleSearchResults}
-          />
-        </Col>
-        <Col>
-          <NewArticle handleArticleList={handleArticleList} />
-        </Col>
         <Col>
           <DeleteAll handleArticleList={handleArticleList} />
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <ArticleList
-            articles={searchResults ? searchResults : articles}
-            handleArticleList={handleArticleList}
-          />
-        </Col>
-      </Row>
+      <Container className="d-flex justify-content-center">
+        <Row className="d-flex justify-content-center">
+          <Col style={{ border: "1px solid red" }} xs={"12"}>
+            <Search
+              articles={articles}
+              handleSearchResults={handleSearchResults}
+            />
+          </Col>
+          <Col style={{ border: "1px solid red" }} id="new-article-button">
+            <NewArticle handleArticleList={handleArticleList} />
+          </Col>
+        </Row>
+      </Container>
+      <Container className="justify-content-center container-space">
+        <Row className="justify-content-center">
+          <Col xs={"10"} sm={"9"} md={"8"} lg={"6"} xl={"5"} xxl={"4.5"}>
+            <ArticleList
+              articles={searchResults ? searchResults : articles}
+              handleArticleList={handleArticleList}
+            />
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 }

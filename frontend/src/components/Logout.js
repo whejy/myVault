@@ -12,8 +12,8 @@ function Logout() {
   return (
     <span>
       <span title="Logout" className="card-icons" onClick={logoutBtn}>
-        <Button outline color="dark">
-          <MdLogout color="white" />
+        <Button className="button-outline" outline color="dark">
+          <MdLogout color="white" size={"1.5em"} />
         </Button>
       </span>
     </span>

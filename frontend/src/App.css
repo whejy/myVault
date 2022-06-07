@@ -1,10 +1,15 @@
 body {
   background: rgb(174,208,238);
-  background: radial-gradient(circle, rgba(174,208,238,1) 9%, rgba(48,129,223,1) 100%);  
+  background: radial-gradient(circle, rgba(174,208,238,1) 9%, rgba(8,78,158,1) 100%);  
 }
 
 #app-title 
-  { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 15vw; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+  { color: #111; padding-bottom: 25px; font-family: 'Helvetica Neue', sans-serif; font-size: 15vw; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+
+
+  .button-outline {
+    border: 0 !important;
+  }
 
 
 .card-icons {

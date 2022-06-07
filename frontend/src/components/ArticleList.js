@@ -39,16 +39,6 @@ function ArticleList(props) {
     return password.split("").map(() => "*");
   }
 
-  // function calculate(articles) {
-  //   var test = [];
-  //   for (let i = 0; i < articles.length; i += 2) {
-  //     const chunk = articles.slice(i, i + 2);
-  //     test.push(chunk);
-  //   }
-  //   return test
-  //   return Math.ceil(articles.length / 2);
-  // }
-
   return (
     <Container fluid className="container-space">
       <Row
@@ -60,7 +50,7 @@ function ArticleList(props) {
       >
         {props.articles.length < 1 && (
           <Col className="d-flex justify-content-center">
-            <div id="empty-search">Sorry, no results</div>
+            <div id="empty-search">Sorry, no results.</div>
           </Col>
         )}
         {props.articles &&
@@ -108,6 +98,7 @@ function ArticleList(props) {
                           )}
                         </span>
                         <span
+                          title="Show/ Hide Password"
                           className="card-icons"
                           onClick={() => togglePassword(article)}
                           color="primary"

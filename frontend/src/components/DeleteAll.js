@@ -18,8 +18,8 @@ function DeleteAll(props) {
   return (
     <span>
       <span title="Delete All" className="card-icons" onClick={handleModal}>
-        <Button outline color="danger">
-          <RiDeleteBinLine color="white" size={"1em"} />
+        <Button className="button-outline" outline color="danger">
+          <RiDeleteBinLine color="white" size={"1.5em"} />
         </Button>
       </span>
       {modal ? (

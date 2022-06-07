@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
 import DeleteModal from "./DeleteModal";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 function DeleteAll(props) {
   const [modal, setModal] = useState(false);
@@ -15,10 +16,12 @@ function DeleteAll(props) {
     setModal(!modal);
   };
   return (
-    <div>
-      <Button onClick={handleModal} color="danger">
-        Delete All
-      </Button>
+    <span>
+      <span title="Delete All" className="card-icons" onClick={handleModal}>
+        <Button outline color="danger">
+          <RiDeleteBinLine color="white" size={"1em"} />
+        </Button>
+      </span>
       {modal ? (
         <DeleteModal
           handleModal={handleModal}
@@ -27,7 +30,7 @@ function DeleteAll(props) {
           handleArticleList={props.handleArticleList}
         />
       ) : null}
-    </div>
+    </span>
   );
 }
 

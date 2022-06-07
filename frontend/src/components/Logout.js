@@ -1,6 +1,7 @@
 import React from "react";
 import { useCookies } from "react-cookie";
-import { Button, Container, Row, Col } from "reactstrap";
+import { Button } from "reactstrap";
+import { MdLogout } from "react-icons/md";
 
 function Logout() {
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
@@ -9,11 +10,13 @@ function Logout() {
     removeToken(["mytoken"]);
   };
   return (
-    <div>
-      <Button color="primary" onClick={logoutBtn}>
-        Logout
-      </Button>
-    </div>
+    <span>
+      <span title="Logout" className="card-icons" onClick={logoutBtn}>
+        <Button outline color="dark">
+          <MdLogout color="white" />
+        </Button>
+      </span>
+    </span>
   );
 }
 

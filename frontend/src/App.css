@@ -7,7 +7,6 @@ body {
   { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 15vw; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
 
 
-
 .card-icons {
   padding: 15px 10px 15px 10px;
   user-select: none;
@@ -41,6 +40,9 @@ body {
   padding-bottom: 30px;
 }
 
+#empty-search {
+  font-style: oblique;
+}
 
 #search-container {
   position: relative;
@@ -68,6 +70,10 @@ body {
   opacity: .5;
 }
 
+#url-link {
+  padding: 20px;
+}
+
 .fake-link {
   color: blue;
   text-decoration: underline;
@@ -85,7 +91,7 @@ body {
 }
 
 .container-space {
-  margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 .radio-button-label {

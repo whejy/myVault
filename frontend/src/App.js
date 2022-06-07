@@ -97,43 +97,31 @@ function App() {
   };
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <div id="app-title">myVault.</div>
       </Row>
-      <Row>
-        <Col className="d-flex justify-content-end">
-          <Logout />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+      <Row style={{ paddingBottom: "5px" }}>
+        <Col className="d-flex g-4 justify-content-center">
+          <NewArticle handleArticleList={handleArticleList} />
           <DeleteAll handleArticleList={handleArticleList} />
+          <Logout />
         </Col>
       </Row>
       <Container className="d-flex justify-content-center">
         <Row className="d-flex justify-content-center">
-          <Col style={{ border: "1px solid red" }} xs={"12"}>
+          <Col xs={"12"}>
             <Search
               articles={articles}
               handleSearchResults={handleSearchResults}
             />
           </Col>
-          <Col style={{ border: "1px solid red" }} id="new-article-button">
-            <NewArticle handleArticleList={handleArticleList} />
-          </Col>
         </Row>
       </Container>
-      <Container className="justify-content-center container-space">
-        <Row className="justify-content-center">
-          <Col xs={"10"} sm={"9"} md={"8"} lg={"6"} xl={"5"} xxl={"4.5"}>
-            <ArticleList
-              articles={searchResults ? searchResults : articles}
-              handleArticleList={handleArticleList}
-            />
-          </Col>
-        </Row>
-      </Container>
+      <ArticleList
+        articles={searchResults ? searchResults : articles}
+        handleArticleList={handleArticleList}
+      />
     </Container>
   );
 }

@@ -19,10 +19,10 @@ function DeleteAll(props) {
   };
 
   return (
-    <div>
+    <span>
       <span title="Add New" className="card-icons" onClick={handleModal}>
-        <Button color="success">
-          <MdOutlineLibraryAdd size={"1.5em"} />
+        <Button outline color="success">
+          <MdOutlineLibraryAdd color="white" size={"1.5em"} />
         </Button>
       </span>
       {modal ? (
@@ -33,7 +33,7 @@ function DeleteAll(props) {
           handleArticleList={props.handleArticleList}
         />
       ) : null}
-    </div>
+    </span>
   );
 }
 

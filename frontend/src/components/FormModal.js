@@ -73,6 +73,18 @@ function FormModal(props) {
         <ModalBody>
           {props.article ? (
             <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                placeholder="Please enter a description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+
               <label htmlFor="username" className="form-label">
                 Username
               </label>
@@ -98,18 +110,6 @@ function FormModal(props) {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {formError.password && <div>Please Provide a Password</div>}
-
-              <label htmlFor="description" className="form-label">
-                Optional: Description
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                placeholder="Please enter a description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
 
               <label htmlFor="url" className="form-label">
                 Optional: URL

@@ -60,7 +60,7 @@ function ArticleList(props) {
                 key={article.id}
                 className="d-flex"
                 xs={"10"}
-                sm={"6"}
+                sm={"7"}
                 md={"5"}
                 lg={"4"}
                 xl={"3"}
@@ -74,13 +74,13 @@ function ArticleList(props) {
                   >
                     <Row>
                       <Col
-                        sm={"9"}
+                        sm={"8"}
                         className="d-flex align-items-center justify-content-center justify-content-sm-start"
                       >
                         {article.description && <i>{article.description}</i>}
                       </Col>
                       <Col
-                        sm={"3"}
+                        sm={"4"}
                         className="d-flex justify-content-center justify-content-sm-end"
                       >
                         <span
@@ -116,7 +116,7 @@ function ArticleList(props) {
                     id="card-body"
                     className="d-flex justify-content-center"
                   >
-                    <Col xs={"6"}>
+                    <Col xs={"8"}>
                       <span className="card-body-titles">Username:</span>{" "}
                       <h3>{article.username}</h3>
                       <br />
@@ -128,7 +128,7 @@ function ArticleList(props) {
                       </h3>
                     </Col>
                     <Col
-                      xs={"6"}
+                      xs={"4"}
                       className="d-flex justify-content-center align-items-center"
                     >
                       {article.url ? (

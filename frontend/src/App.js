@@ -31,9 +31,7 @@ function App() {
           // Add password visibility state and random color for card decoration
           resp.map((el) => {
             el.visibility = false;
-            if (!el.url) {
-              el.color = randomColor({ format: "rgba", alpha: 0.5 });
-            }
+            el.color = getColor();
             return el;
           })
         )
@@ -91,15 +89,19 @@ function App() {
     }
 
     if (action === "insert") {
-      article.color = randomColor({ format: "rgba", alpha: 0.25 });
+      article.color = getColor();
       setArticles([article, ...articles]);
     }
+  };
+
+  const getColor = () => {
+    return randomColor({ format: "rgba", alpha: 0.5 });
   };
 
   return (
     <Container fluid>
       <Row>
-        <div id="app-title">myVault.</div>
+        <Col className="app-title">myVault.</Col>
       </Row>
       <Row style={{ paddingBottom: "5px" }}>
         <Col className="d-flex g-4 justify-content-center">

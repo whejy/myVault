@@ -2,7 +2,19 @@ import React, { useState, useEffect } from "react";
 import APIService from "../APIService";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { Alert, Input, Col, Row } from "reactstrap";
+import {
+  Alert,
+  Form,
+  FormGroup,
+  Label,
+  Button,
+  FormText,
+  Input,
+  Container,
+  Col,
+  Row,
+} from "reactstrap";
+import { FcLock, FcUnlock } from "react-icons/fc";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,6 +26,7 @@ function Login() {
     username: false,
     password: false,
   });
+  const [loginSuccess, setLoginSuccess] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -28,11 +41,16 @@ function Login() {
     setFormError({ username: false, password: false });
   }, [isLogin]);
 
-  const loginBtn = () => {
+  const loginBtn = (e) => {
     if (username && password) {
       setFormError({ username: false, password: false });
       APIService.LoginUser({ username, password })
-        .then((resp) => setToken("mytoken", resp.token))
+        .then((resp) => {
+          setLoginSuccess(true);
+          setTimeout(() => {
+            setToken("mytoken", resp.token);
+          }, 800);
+        })
         .catch((error) => setError(error));
     } else {
       setError("");
@@ -53,79 +71,98 @@ function Login() {
   };
 
   return (
-    <div className="App">
-      <br />
-      <br />
-      {isLogin ? <h1>Please Login</h1> : <h1>Please Register</h1>}
-      <br />
-      <br />
+    <Container className="d-flex justify-content-center">
+      <Row className="flex-grow-1 justify-content-center align-items-center">
+        <Col md={"6"} style={{ border: "1px solid red" }}>
+          <Form>
+            <FormGroup row>
+              <Col style={{ fontSize: "10vw" }} className="app-title">
+                {isLogin ? "login." : "register."}
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col>
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  type="text"
+                  id="username"
+                  placeholder="Please Enter Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                />
+                {formError.username && (
+                  <Alert color="danger">Please Provide a Username</Alert>
+                )}
+              </Col>
+            </FormGroup>
 
-      <div className="mb-3">
-        <label htmlFor="username" className="form-label">
-          Username
-        </label>
-        <Input
-          type="text"
-          className="form-control"
-          id="username"
-          placeholder="Please Enter Username"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-        />
-        {formError.username && (
-          <Alert color="danger">Please Provide a Username</Alert>
-        )}
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
-        <Input
-          type="password"
-          className="form-control"
-          id="password"
-          placeholder="Please Enter Password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        {formError.password && (
-          <Alert color="danger">Please Provide a Password</Alert>
-        )}
-      </div>
-
-      {error ? <div>{error.message}</div> : null}
-      {isLogin ? (
-        <button onClick={loginBtn} className="btn btn-primary">
-          Login
-        </button>
-      ) : (
-        <button onClick={registerBtn} className="btn btn-primary">
-          Register
-        </button>
-      )}
-
-      <div className="mb-3">
-        <br />
-        {isLogin ? (
-          <h5>
-            If You Don't Have An Account, Please{" "}
-            <span className="fake-link" onClick={() => setLogin(false)}>
-              Register{" "}
-            </span>
-            Here
-          </h5>
-        ) : (
-          <h5>
-            If You Have An Account, Please{" "}
-            <span className="fake-link" onClick={() => setLogin(true)}>
-              Login{" "}
-            </span>
-            Here
-          </h5>
-        )}
-      </div>
-    </div>
+            <FormGroup row>
+              <Col>
+                <Label htmlFor="password" className="form-label">
+                  Password
+                </Label>
+                <Input
+                  type="password"
+                  id="password"
+                  placeholder="Please Enter Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
+                {formError.password && (
+                  <Alert color="danger">Please Provide a Password</Alert>
+                )}
+              </Col>
+            </FormGroup>
+            <Row>
+              <Col className="d-flex justify-content-center">
+                {error ? <div>{error.message}</div> : null}
+                {isLogin ? (
+                  <Button
+                    className="login-buttons"
+                    outline
+                    color="light"
+                    onClick={loginBtn}
+                  >
+                    {/* <FcLock className="z-index-1" size={"25em"} /> */}
+                    {loginSuccess ? (
+                      <FcLock className="z-index-1" size={"25em"} />
+                    ) : (
+                      <FcUnlock size={"10em"} />
+                    )}
+                  </Button>
+                ) : (
+                  <Button color="primary" onClick={registerBtn}>
+                    Register
+                  </Button>
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col className="d-flex justify-content-center">
+                {isLogin ? (
+                  <p>
+                    No account?{" "}
+                    <span className="fake-link" onClick={() => setLogin(false)}>
+                      Register{" "}
+                    </span>
+                    Here
+                  </p>
+                ) : (
+                  <p>
+                    If You Have An Account, Please{" "}
+                    <span className="fake-link" onClick={() => setLogin(true)}>
+                      Login{" "}
+                    </span>
+                    Here
+                  </p>
+                )}
+              </Col>
+            </Row>
+          </Form>
+          {/* <FcUnlock /> */}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

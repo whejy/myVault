@@ -73,7 +73,7 @@ function Login() {
   return (
     <Container className="d-flex justify-content-center">
       <Row className="flex-grow-1 justify-content-center align-items-center">
-        <Col md={"6"} style={{ border: "1px solid red" }}>
+        <Col md={"6"}>
           <Form>
             <FormGroup row>
               <Col style={{ fontSize: "10vw" }} className="app-title">
@@ -125,7 +125,7 @@ function Login() {
                   >
                     {/* <FcLock className="z-index-1" size={"25em"} /> */}
                     {loginSuccess ? (
-                      <FcLock className="z-index-1" size={"25em"} />
+                      <FcLock size={"12em"} />
                     ) : (
                       <FcUnlock size={"10em"} />
                     )}

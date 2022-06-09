@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "reactstrap";
 import { MdOutlineLibraryAdd } from "react-icons/md";
 import FormModal from "./FormModal";
+import Tooltip from "./Tooltip";
 
 function DeleteAll(props) {
   const [modal, setModal] = useState(false);
@@ -20,11 +21,24 @@ function DeleteAll(props) {
 
   return (
     <span>
-      <span title="Add New" className="card-icons" onClick={handleModal}>
+      {/* <span title="Add New" className="card-icons" onClick={handleModal}>
         <Button className="button-outline" outline color="success">
           <MdOutlineLibraryAdd color="white" size={"1.5em"} />
         </Button>
-      </span>
+      </span> */}
+      <Tooltip
+        message={"Add New"}
+        type={"success"}
+        position={"top"}
+        id={"addnew"}
+        onClickHandler={handleModal}
+        button={
+          <Button className="button-outline" outline color="success">
+            <MdOutlineLibraryAdd color="white" size={"1.5em"} />
+          </Button>
+        }
+      />
+
       {modal ? (
         <FormModal
           title={modalContent.title}

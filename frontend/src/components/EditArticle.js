@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "reactstrap";
+import Tooltip from "./Tooltip";
 import { RiEdit2Fill } from "react-icons/ri";
 import FormModal from "./FormModal";
 
@@ -16,9 +16,15 @@ function EditArticle(props) {
   };
   return (
     <div>
-      <span title="Edit" className="card-icons" onClick={handleModal}>
-        <RiEdit2Fill size={"1.5em"} />
-      </span>
+      <Tooltip
+        message={"Edit"}
+        id={"edit"}
+        type={"info"}
+        position={"top"}
+        onClickHandler={handleModal}
+        button={<RiEdit2Fill size={"1.5em"} />}
+      />
+
       {modal ? (
         <FormModal
           title={modalContent.title}

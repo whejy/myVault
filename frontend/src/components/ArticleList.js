@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditArticle from "./EditArticle";
 import DeleteArticle from "./DeleteArticle";
+import Tooltip from "./Tooltip";
 import {
   Button,
   Container,
@@ -37,6 +38,11 @@ function ArticleList(props) {
 
   function hidePassword(password) {
     return password.split("").map(() => "*");
+  }
+
+  function copyPassword(article) {
+    navigator.clipboard.writeText(article.password);
+    setIsActive(article.id);
   }
 
   return (
@@ -84,30 +90,44 @@ function ArticleList(props) {
                         className="d-flex justify-content-center justify-content-sm-end"
                       >
                         <span
-                          title="Copy Password"
-                          className="card-icons"
                           onClick={() => {
                             navigator.clipboard.writeText(article.password);
                             setIsActive(article.id);
                           }}
                         >
-                          {isActive == article.id ? (
-                            <FaCopy size={"1.5em"} />
-                          ) : (
-                            <FaRegCopy size={"1.5em"} />
-                          )}
+                          <Tooltip
+                            message={
+                              article.id == isActive
+                                ? "Copied!"
+                                : "Copy Password"
+                            }
+                            delay={article.id == isActive ? 1 : 500}
+                            type={"info"}
+                            position={"top"}
+                            id={"copy"}
+                            button={
+                              isActive == article.id ? (
+                                <FaCopy size={"1.5em"} />
+                              ) : (
+                                <FaRegCopy size={"1.5em"} />
+                              )
+                            }
+                          />
                         </span>
-                        <span
-                          title="Show/ Hide Password"
-                          className="card-icons"
-                          onClick={() => togglePassword(article)}
-                          color="primary"
-                        >
-                          {article.visibility ? (
-                            <BiHide size={"1.5em"} />
-                          ) : (
-                            <BiShow size={"1.5em"} />
-                          )}
+                        <span onClick={() => togglePassword(article)}>
+                          <Tooltip
+                            message={"Toggle Password"}
+                            type={"info"}
+                            position={"top"}
+                            id={"toggle"}
+                            button={
+                              article.visibility ? (
+                                <BiHide size={"1.5em"} />
+                              ) : (
+                                <BiShow size={"1.5em"} />
+                              )
+                            }
+                          />
                         </span>
                       </Col>
                     </Row>

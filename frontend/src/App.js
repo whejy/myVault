@@ -5,6 +5,7 @@ import NewArticle from "./components/NewArticle";
 import DeleteAll from "./components/DeleteAll";
 import Search from "./components/Search";
 import Logout from "./components/Logout";
+import LoadingSpinner from "./components/Spinner";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Row, Col } from "reactstrap";
@@ -13,11 +14,14 @@ import randomColor from "randomcolor";
 function App() {
   const [articles, setArticles] = useState([]);
   const [searchResults, setSearchResults] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
 
   // Fetch article list on page load
   useEffect(() => {
+    setIsLoading(true);
     fetch("http://127.0.0.1:8000/vault/", {
       method: "GET",
       headers: {
@@ -26,7 +30,7 @@ function App() {
       },
     })
       .then((resp) => resp.json())
-      .then((resp) =>
+      .then((resp) => {
         setArticles(
           // Add password visibility state and random color for card decoration
           resp.map((el) => {
@@ -34,8 +38,9 @@ function App() {
             el.color = getColor();
             return el;
           })
-        )
-      )
+        );
+        setIsLoading(false);
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -56,8 +61,10 @@ function App() {
             .includes(searchQuery.toLowerCase())
         )
       );
+      setHasSearched(true);
       // If user erases search input, trigger render of original article list
     } else {
+      setHasSearched(false);
       setSearchResults(null);
     }
   };
@@ -121,6 +128,8 @@ function App() {
         </Row>
       </Container>
       <ArticleList
+        spinner={isLoading ? <LoadingSpinner /> : null}
+        hasSearched={hasSearched}
         articles={searchResults ? searchResults : articles}
         handleArticleList={handleArticleList}
       />

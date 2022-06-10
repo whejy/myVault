@@ -49,11 +49,16 @@ function ArticleList(props) {
         }}
         className="g-4 justify-content-center justify-content-lg-start"
       >
-        {props.articles.length < 1 && (
+        {props.spinner && (
+          <Col className="d-flex justify-content-center">
+            <div id="empty-search">{props.spinner}</div>
+          </Col>
+        )}
+        {props.articles.length < 1 && props.hasSearched ? (
           <Col className="d-flex justify-content-center">
             <div id="empty-search">Sorry, no results.</div>
           </Col>
-        )}
+        ) : null}
         {props.articles &&
           props.articles.map((article) => {
             return (

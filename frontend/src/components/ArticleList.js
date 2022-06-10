@@ -40,11 +40,6 @@ function ArticleList(props) {
     return password.split("").map(() => "*");
   }
 
-  function copyPassword(article) {
-    navigator.clipboard.writeText(article.password);
-    setIsActive(article.id);
-  }
-
   return (
     <Container fluid className="container-space">
       <Row
@@ -80,14 +75,19 @@ function ArticleList(props) {
                   >
                     <Row>
                       <Col
-                        sm={"8"}
+                        style={{ textAlign: "center" }}
+                        sm={"7"}
                         className="d-flex align-items-center justify-content-center justify-content-sm-start"
                       >
-                        {article.description && <i>{article.description}</i>}
+                        {article.description && (
+                          <span id="article-description">
+                            {article.description}
+                          </span>
+                        )}
                       </Col>
                       <Col
-                        sm={"4"}
-                        className="d-flex justify-content-center justify-content-sm-end"
+                        sm={"5"}
+                        className="d-flex align-items-center justify-content-center justify-content-sm-end"
                       >
                         <span
                           onClick={() => {

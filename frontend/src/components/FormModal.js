@@ -29,11 +29,11 @@ function FormModal(props) {
     setPassword(props.article.password);
     setDescription(props.article.description);
     setUrl(props.article.url);
-    setFormError({ username: false, password: false });
+    setFormError({ username: false, password: false, description: false });
   }, [props.article]);
 
   const updateArticle = () => {
-    if (username && password) {
+    if (username && password && description) {
       props.handleModal();
       APIService.UpdateArticle(
         props.article.id,
@@ -46,12 +46,16 @@ function FormModal(props) {
         token["mytoken"]
       ).then((resp) => props.handleArticleList(resp, "update"));
     } else {
-      setFormError({ username: !username, password: !password });
+      setFormError({
+        username: !username,
+        password: !password,
+        description: !description,
+      });
     }
   };
 
   const insertArticle = () => {
-    if (username && password) {
+    if (username && password && description) {
       props.handleModal();
       APIService.InsertArticle(
         { username, password, description, url },
@@ -62,7 +66,11 @@ function FormModal(props) {
       setUrl("");
       setDescription("");
     } else {
-      setFormError({ username: !username, password: !password });
+      setFormError({
+        username: !username,
+        password: !password,
+        description: !description,
+      });
     }
   };
 
@@ -74,16 +82,17 @@ function FormModal(props) {
           {props.article ? (
             <div className="mb-3">
               <label htmlFor="description" className="form-label">
-                Description
+                Title
               </label>
               <input
                 type="text"
                 className="form-control"
                 id="description"
-                placeholder="Please enter a description"
+                placeholder="Please enter a title"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
+              {formError.description && <div>Please Provide a Title</div>}
 
               <label htmlFor="username" className="form-label">
                 Username

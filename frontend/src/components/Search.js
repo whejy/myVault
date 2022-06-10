@@ -65,7 +65,7 @@ function Search(props) {
                 value="description"
                 name="search-query"
               />{" "}
-              Description
+              Title
             </label>
             <label className="radio-button-label">
               <Input

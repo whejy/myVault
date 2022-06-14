@@ -7,11 +7,13 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Form,
   FormGroup,
   Input,
   Label,
   Container,
 } from "reactstrap";
+import FormModalFeedback from "./FormFeedback";
 
 function FormModal(props) {
   const [username, setUsername] = useState("");
@@ -31,6 +33,18 @@ function FormModal(props) {
     setUrl(props.article.url);
     setFormError({ username: false, password: false, description: false });
   }, [props.article]);
+
+  useEffect(() => {
+    setFormError({ ...formError, username: false });
+  }, [username]);
+
+  useEffect(() => {
+    setFormError({ ...formError, password: false });
+  }, [password]);
+
+  useEffect(() => {
+    setFormError({ ...formError, description: false });
+  }, [description]);
 
   const updateArticle = () => {
     if (username && password && description) {
@@ -80,77 +94,84 @@ function FormModal(props) {
         <ModalHeader toggle={props.handleModal}>{props.title}</ModalHeader>
         <ModalBody>
           {props.article ? (
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">
-                Title
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                placeholder="Please enter a title"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              {formError.description && <div>Please Provide a Title</div>}
+            <Form>
+              <FormGroup>
+                <Label htmlFor="description">Title</Label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  placeholder="Please enter a title"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  invalid={formError.description}
+                />
+                {formError.description && <FormModalFeedback />}
+              </FormGroup>
+              <FormGroup>
+                <Label htmlFor="username" className="form-label">
+                  Username
+                </Label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  placeholder="Please enter username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  invalid={formError.username}
+                />
+                {formError.username && <FormModalFeedback />}
+              </FormGroup>
+              <FormGroup>
+                <Label htmlFor="password" className="form-label">
+                  Password
+                </Label>
+                <Input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  placeholder="Please enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  invalid={formError.password}
+                />
+                {formError.password && <FormModalFeedback />}
+              </FormGroup>
+              <FormGroup>
+                <Label htmlFor="url" className="form-label">
+                  Optional: URL
+                </Label>
+                <Input
+                  type="url"
+                  className="form-control"
+                  id="url"
+                  placeholder="https://"
+                  value={url}
+                  onChange={(e) => {
+                    // Prefix "https://" to user URL input form
+                    const prefix = "https://";
+                    const input = e.target.value;
+                    input.length > 0
+                      ? (e.target.value =
+                          prefix + input.substring(prefix.length))
+                      : (e.target.value = "");
 
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="username"
-                placeholder="Please enter username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              {formError.username && <div>Please Provide a Username</div>}
+                    // Allow user to empty the URL field
+                    if (input.length === 7 && !e.nativeEvent.data) {
+                      e.target.value = "";
+                    }
 
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Please enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {formError.password && <div>Please Provide a Password</div>}
+                    // Fix to capture user's initial keypress in URL field
+                    if (input.length === 1 && e.nativeEvent.data) {
+                      e.target.value = prefix + e.nativeEvent.data;
+                    }
 
-              <label htmlFor="url" className="form-label">
-                Optional: URL
-              </label>
-              <input
-                type="url"
-                className="form-control"
-                id="url"
-                placeholder="https://"
-                value={url}
-                onChange={(e) => {
-                  // Prefix "https://" to user URL input form
-                  const prefix = "https://";
-                  const input = e.target.value;
-                  input.length > 0
-                    ? (e.target.value = prefix + input.substring(prefix.length))
-                    : (e.target.value = "");
-
-                  // Allow user to empty the URL field
-                  if (input.length === 7 && !e.nativeEvent.data) {
-                    e.target.value = "";
-                  }
-
-                  // Fix to capture user's initial keypress in URL field
-                  if (input.length === 1 && e.nativeEvent.data) {
-                    e.target.value = prefix + e.nativeEvent.data;
-                  }
-
-                  setUrl(e.target.value);
-                }}
-              />
-            </div>
+                    setUrl(e.target.value);
+                  }}
+                />
+              </FormGroup>{" "}
+            </Form>
           ) : null}
         </ModalBody>
         <ModalFooter>

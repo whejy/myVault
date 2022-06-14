@@ -8,11 +8,12 @@ import {
   FormGroup,
   Label,
   Button,
-  FormText,
+  FormFeedback,
   Input,
   Container,
   Col,
   Row,
+  FormText,
 } from "reactstrap";
 import { FcLock, FcUnlock } from "react-icons/fc";
 
@@ -58,6 +59,18 @@ function Login() {
     }
   };
 
+  const handleUsername = (username) => {
+    setUsername(username);
+    setFormError({ ...formError, username: false });
+    setError("");
+  };
+
+  const handlePassword = (password) => {
+    setPassword(password);
+    setFormError({ ...formError, password: false });
+    setError("");
+  };
+
   const registerBtn = () => {
     if (username && password) {
       setFormError({ username: false, password: false });
@@ -73,10 +86,13 @@ function Login() {
   return (
     <Container className="d-flex justify-content-center">
       <Row className="flex-grow-1 justify-content-center align-items-center">
-        <Col md={"6"}>
+        <Col xl={"5"} lg={"6"} md={"8"} xs={"10"}>
           <Form>
             <FormGroup row>
-              <Col style={{ fontSize: "10vw" }} className="app-title">
+              <Col
+                style={{ fontSize: "12vw" }}
+                className="d-flex justify-content-center app-title"
+              >
                 {isLogin ? "login." : "register."}
               </Col>
             </FormGroup>
@@ -87,16 +103,17 @@ function Login() {
                   type="text"
                   id="username"
                   placeholder="Please Enter Username"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => handleUsername(e.target.value)}
                   value={username}
+                  invalid={formError.username}
                 />
                 {formError.username && (
-                  <Alert color="danger">Please Provide a Username</Alert>
+                  <FormFeedback>Please provide a username</FormFeedback>
                 )}
               </Col>
             </FormGroup>
 
-            <FormGroup row>
+            <FormGroup className="position-relative" row>
               <Col>
                 <Label htmlFor="password" className="form-label">
                   Password
@@ -105,17 +122,26 @@ function Login() {
                   type="password"
                   id="password"
                   placeholder="Please Enter Password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => handlePassword(e.target.value)}
                   value={password}
+                  invalid={formError.password}
                 />
                 {formError.password && (
-                  <Alert color="danger">Please Provide a Password</Alert>
+                  <FormFeedback>Please provide a password</FormFeedback>
                 )}
               </Col>
+              {error ? (
+                <Row className="g-2">
+                  <Col className="d-flex justify-content-center">
+                    <FormText style={{ fontWeight: "bold" }}>
+                      {error.message}
+                    </FormText>
+                  </Col>
+                </Row>
+              ) : null}
             </FormGroup>
             <Row>
               <Col className="d-flex justify-content-center">
-                {error ? <div>{error.message}</div> : null}
                 {isLogin ? (
                   <Button
                     className="login-buttons"
@@ -125,9 +151,9 @@ function Login() {
                   >
                     {/* <FcLock className="z-index-1" size={"25em"} /> */}
                     {loginSuccess ? (
-                      <FcLock size={"12em"} />
+                      <FcLock size={"12vw"} />
                     ) : (
-                      <FcUnlock size={"10em"} />
+                      <FcUnlock size={"10vw"} />
                     )}
                   </Button>
                 ) : (

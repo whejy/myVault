@@ -56,7 +56,7 @@ function ArticleList(props) {
         )}
         {props.articles.length < 1 && props.hasSearched ? (
           <Col className="d-flex justify-content-center">
-            <div id="empty-search">Sorry, no results.</div>
+            <div id="empty-search">Nothing to show...</div>
           </Col>
         ) : null}
         {props.articles &&

@@ -157,7 +157,11 @@ function Login() {
                     )}
                   </Button>
                 ) : (
-                  <Button color="primary" onClick={registerBtn}>
+                  <Button
+                    className="login-buttons"
+                    color="primary"
+                    onClick={registerBtn}
+                  >
                     Register
                   </Button>
                 )}

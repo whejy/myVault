@@ -16,6 +16,8 @@ function App() {
   const [searchResults, setSearchResults] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [animateDelete, setAnimateDelete] = useState(null);
+  const [animateInsert, setAnimateInsert] = useState(null);
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
 
@@ -76,17 +78,23 @@ function App() {
       if (article) {
         new_articles = articles.filter((myarticle) => {
           if (myarticle.id === article.id) {
+            setAnimateDelete(article);
             return false;
           }
           return true;
         });
+        setTimeout(() => {
+          setArticles(new_articles);
+        }, 1000);
+      } else {
+        setArticles(new_articles);
       }
-      setArticles(new_articles);
     }
 
     if (action === "update") {
       const new_article = articles.map((myarticle) => {
         if (myarticle.id === article.id) {
+          article.color = getColor();
           return article;
         } else {
           return myarticle;
@@ -98,9 +106,11 @@ function App() {
     if (action === "insert") {
       article.color = getColor();
       setArticles([article, ...articles]);
+      setAnimateInsert(article);
     }
   };
 
+  // Get a random color for card theme
   const getColor = () => {
     return randomColor({ format: "rgba", alpha: 0.5 });
   };
@@ -132,6 +142,8 @@ function App() {
         hasSearched={hasSearched}
         articles={searchResults ? searchResults : articles}
         handleArticleList={handleArticleList}
+        animateDelete={animateDelete}
+        animateInsert={animateInsert}
       />
     </Container>
   );

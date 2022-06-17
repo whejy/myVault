@@ -64,7 +64,13 @@ function ArticleList(props) {
             return (
               <Col
                 key={article.id}
-                className="d-flex"
+                className={
+                  article == props.animateDelete
+                    ? "article-animate-delete"
+                    : article == props.animateInsert
+                    ? "article-animate-insert"
+                    : null
+                }
                 xs={"10"}
                 sm={"7"}
                 md={"5"}
@@ -141,7 +147,7 @@ function ArticleList(props) {
                     id="card-body"
                     className="d-flex justify-content-center"
                   >
-                    <Col xs={"8"}>
+                    <Col>
                       <span className="card-body-titles">Username:</span>{" "}
                       <h3>{article.username}</h3>
                       <br />

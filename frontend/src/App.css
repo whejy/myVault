@@ -1,3 +1,34 @@
+@keyframes fade-delete {
+  0% {
+      opacity: 1;
+      max-width: 100%;
+  }
+  75% {
+      opacity: 0;
+      max-width: 100%;
+  }
+  100% {
+      opacity: 0;
+      max-width: 0;
+  }
+}
+
+@keyframes fade-insert {
+  0% {
+    opacity: 0;
+    max-width: 0;
+  }
+
+  25% {
+    opacity: 1;
+    max-width: 100%;
+  }
+  100% {
+    opacity: 1;
+    max-width: 100%;
+  }
+}
+
 .app-title {
   color: #111;
   padding-bottom: 25px;
@@ -8,6 +39,21 @@
   line-height: 1;
   text-align: center; 
 }
+
+.article-animate-delete {
+  animation-name: fade-delete;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+.article-animate-insert {
+  animation-name: fade-insert;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
 
 #article-description {
   font-size: 20px;
@@ -129,14 +175,3 @@ p {
 #url-link {
   padding: 20px;
 }
-
-
-/* .test {
-    height: 100px;
-    transition: height 300ms;
-    width: 100px;
-}
-
-.is-active {
-  height: 25em;
-} */

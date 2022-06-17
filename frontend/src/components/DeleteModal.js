@@ -26,9 +26,9 @@ export class MyModal extends Component {
     let token = this.state.token;
 
     if (article) {
-      APIService.DeleteArticle(article.id, token)
-        .then(() => console.log(article))
-        .catch((error) => console.log(error));
+      APIService.DeleteArticle(article.id, token).catch((error) =>
+        console.log(error)
+      );
     } else {
       APIService.DeleteAll(token).catch((error) => console.log(error));
     }

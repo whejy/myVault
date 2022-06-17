@@ -46,7 +46,8 @@ function FormModal(props) {
     setFormError({ ...formError, description: false });
   }, [description]);
 
-  const updateArticle = () => {
+  const updateArticle = (e) => {
+    e.preventDefault();
     if (username && password && description) {
       props.handleModal();
       APIService.UpdateArticle(
@@ -68,7 +69,8 @@ function FormModal(props) {
     }
   };
 
-  const insertArticle = () => {
+  const insertArticle = (e) => {
+    e.preventDefault();
     if (username && password && description) {
       props.handleModal();
       APIService.InsertArticle(
@@ -90,106 +92,127 @@ function FormModal(props) {
 
   return (
     <div>
-      <Modal isOpen={true} toggle={props.handleModal}>
+      <Modal autoFocus={false} isOpen={true} toggle={props.handleModal}>
         <ModalHeader toggle={props.handleModal}>{props.title}</ModalHeader>
-        <ModalBody>
-          {props.article ? (
-            <Form>
-              <FormGroup>
-                <Label htmlFor="description">Title</Label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  placeholder="Please enter a title"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  invalid={formError.description}
-                />
-                {formError.description && <FormModalFeedback />}
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="username" className="form-label">
-                  Username
-                </Label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  id="username"
-                  placeholder="Please enter username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  invalid={formError.username}
-                />
-                {formError.username && <FormModalFeedback />}
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="password" className="form-label">
-                  Password
-                </Label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="Please enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  invalid={formError.password}
-                />
-                {formError.password && <FormModalFeedback />}
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="url" className="form-label">
-                  Optional: URL
-                </Label>
-                <Input
-                  type="url"
-                  className="form-control"
-                  id="url"
-                  placeholder="https://"
-                  value={url}
-                  onChange={(e) => {
-                    // Prefix "https://" to user URL input form
-                    const prefix = "https://";
-                    const input = e.target.value;
-                    input.length > 0
-                      ? (e.target.value =
-                          prefix + input.substring(prefix.length))
-                      : (e.target.value = "");
+        <Form
+          onSubmit={
+            props.article.id
+              ? (e) => {
+                  updateArticle(e);
+                }
+              : (e) => {
+                  insertArticle(e);
+                }
+          }
+        >
+          <ModalBody>
+            {props.article ? (
+              <Container>
+                <FormGroup>
+                  <Label htmlFor="description">Title</Label>
+                  <Input
+                    autoFocus={true}
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    placeholder="Please enter a title"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    invalid={formError.description}
+                  />
+                  {formError.description && <FormModalFeedback />}
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="username" className="form-label">
+                    Username
+                  </Label>
+                  <Input
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    placeholder="Please enter username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    invalid={formError.username}
+                  />
+                  {formError.username && <FormModalFeedback />}
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="password" className="form-label">
+                    Password
+                  </Label>
+                  <Input
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="Please enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    invalid={formError.password}
+                  />
+                  {formError.password && <FormModalFeedback />}
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="url" className="form-label">
+                    Optional: URL
+                  </Label>
+                  <Input
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                    type="url"
+                    className="form-control"
+                    id="url"
+                    placeholder="https://"
+                    value={url}
+                    onChange={(e) => {
+                      // Prefix "https://" to user URL input form
+                      const prefix = "https://";
+                      const input = e.target.value;
+                      input.length > 0
+                        ? (e.target.value =
+                            prefix + input.substring(prefix.length))
+                        : (e.target.value = "");
 
-                    // Allow user to empty the URL field
-                    if (input.length === 7 && !e.nativeEvent.data) {
-                      e.target.value = "";
-                    }
+                      // Allow user to empty the URL field
+                      if (input.length === 7 && !e.nativeEvent.data) {
+                        e.target.value = "";
+                      }
 
-                    // Fix to capture user's initial keypress in URL field
-                    if (input.length === 1 && e.nativeEvent.data) {
-                      e.target.value = prefix + e.nativeEvent.data;
-                    }
+                      // Fix to capture user's initial keypress in URL field
+                      if (input.length === 1 && e.nativeEvent.data) {
+                        e.target.value = prefix + e.nativeEvent.data;
+                      }
 
-                    setUrl(e.target.value);
-                  }}
-                />
-              </FormGroup>{" "}
-            </Form>
-          ) : null}
-        </ModalBody>
-        <ModalFooter>
-          {props.article.id ? (
-            <Button
-              className="d-flex justify-content-center"
-              onClick={updateArticle}
-              color="success"
-            >
-              Save
-            </Button>
-          ) : (
-            <Button onClick={insertArticle} color="success">
-              Add
-            </Button>
-          )}
-          <Button onClick={props.handleModal}>Cancel</Button>
-        </ModalFooter>
+                      setUrl(e.target.value);
+                    }}
+                  />
+                </FormGroup>{" "}
+              </Container>
+            ) : null}
+          </ModalBody>
+          <ModalFooter>
+            {props.article.id ? (
+              <Button type="Submit" color="success">
+                Save
+              </Button>
+            ) : (
+              <Button type="submit" color="success">
+                Add
+              </Button>
+            )}
+            <Button onClick={props.handleModal}>Cancel</Button>
+          </ModalFooter>
+        </Form>
       </Modal>
     </div>
   );

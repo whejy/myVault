@@ -42,23 +42,6 @@ function Login() {
     setFormError({ username: false, password: false });
   }, [isLogin]);
 
-  const loginBtn = (e) => {
-    if (username && password) {
-      setFormError({ username: false, password: false });
-      APIService.LoginUser({ username, password })
-        .then((resp) => {
-          setLoginSuccess(true);
-          setTimeout(() => {
-            setToken("mytoken", resp.token);
-          }, 800);
-        })
-        .catch((error) => setError(error));
-    } else {
-      setError("");
-      setFormError({ username: !username, password: !password });
-    }
-  };
-
   const handleUsername = (username) => {
     setUsername(username);
     setFormError({ ...formError, username: false });
@@ -71,7 +54,34 @@ function Login() {
     setError("");
   };
 
-  const registerBtn = () => {
+  const loginBtn = (e) => {
+    e.preventDefault();
+    if (username && password) {
+      setFormError({ username: false, password: false });
+      APIService.LoginUser({ username, password })
+        .then((resp) => {
+          setLoginSuccess(true);
+          setTimeout(() => {
+            setToken("mytoken", resp.token);
+          }, 800);
+        })
+        .catch((error) => {
+          setError(error);
+          document.querySelector("#username").select();
+        });
+    } else {
+      setError("");
+      setFormError({ username: !username, password: !password });
+      {
+        username
+          ? document.querySelector("#password").select()
+          : document.querySelector("#username").select();
+      }
+    }
+  };
+
+  const registerBtn = (e) => {
+    e.preventDefault();
     if (username && password) {
       setFormError({ username: false, password: false });
       APIService.RegisterUser({ username, password })
@@ -80,6 +90,11 @@ function Login() {
     } else {
       setError("");
       setFormError({ username: !username, password: !password });
+      {
+        username
+          ? document.querySelector("#password").select()
+          : document.querySelector("#username").select();
+      }
     }
   };
 
@@ -87,7 +102,17 @@ function Login() {
     <Container className="d-flex justify-content-center">
       <Row className="flex-grow-1 justify-content-center align-items-center">
         <Col xl={"5"} lg={"6"} md={"8"} xs={"10"}>
-          <Form>
+          <Form
+            onSubmit={
+              isLogin
+                ? (e) => {
+                    loginBtn(e);
+                  }
+                : (e) => {
+                    registerBtn(e);
+                  }
+            }
+          >
             <FormGroup row>
               <Col
                 style={{ fontSize: "12vw" }}
@@ -100,6 +125,7 @@ function Login() {
               <Col>
                 <Label htmlFor="username">Username</Label>
                 <Input
+                  autoFocus={true}
                   type="text"
                   id="username"
                   placeholder="Please Enter Username"
@@ -144,12 +170,11 @@ function Login() {
               <Col className="d-flex justify-content-center">
                 {isLogin ? (
                   <Button
+                    type="submit"
                     className="login-buttons"
                     outline
                     color="light"
-                    onClick={loginBtn}
                   >
-                    {/* <FcLock className="z-index-1" size={"25em"} /> */}
                     {loginSuccess ? (
                       <FcLock size={"12vw"} />
                     ) : (
@@ -158,9 +183,9 @@ function Login() {
                   </Button>
                 ) : (
                   <Button
+                    type="submit"
                     className="login-buttons"
                     color="primary"
-                    onClick={registerBtn}
                   >
                     Register
                   </Button>
@@ -189,7 +214,6 @@ function Login() {
               </Col>
             </Row>
           </Form>
-          {/* <FcUnlock /> */}
         </Col>
       </Row>
     </Container>

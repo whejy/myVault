@@ -20,12 +20,14 @@ import { FcLock, FcUnlock } from "react-icons/fc";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [token, setToken] = useCookies(["mytoken"]);
   const [isLogin, setLogin] = useState(true);
   const [error, setError] = useState("");
   const [formError, setFormError] = useState({
     username: false,
     password: false,
+    passwordConfirm: false,
   });
   const [loginSuccess, setLoginSuccess] = useState(false);
   let navigate = useNavigate();
@@ -39,7 +41,7 @@ function Login() {
   //   When user switches between register/ login forms, reset any errors
   useEffect(() => {
     setError("");
-    setFormError({ username: false, password: false });
+    setFormError({ username: false, password: false, passwordConfirm: false });
   }, [isLogin]);
 
   const handleUsername = (username) => {
@@ -54,8 +56,17 @@ function Login() {
     setError("");
   };
 
+  const handlePasswordConfirm = (passwordConfirm) => {
+    setPasswordConfirm(passwordConfirm);
+    setFormError({ ...formError, passwordConfirm: false });
+    setError("");
+  };
+
   const loginBtn = (e) => {
-    e.preventDefault();
+    {
+      // In case of being sent from register button, prevent default already called in register function
+      e && e.preventDefault();
+    }
     if (username && password) {
       setFormError({ username: false, password: false });
       APIService.LoginUser({ username, password })
@@ -71,7 +82,10 @@ function Login() {
         });
     } else {
       setError("");
-      setFormError({ username: !username, password: !password });
+      setFormError({
+        username: !username,
+        password: !password,
+      });
       {
         username
           ? document.querySelector("#password").select()
@@ -82,14 +96,31 @@ function Login() {
 
   const registerBtn = (e) => {
     e.preventDefault();
-    if (username && password) {
-      setFormError({ username: false, password: false });
+    if (username && password && password === passwordConfirm) {
+      setFormError({
+        username: false,
+        password: false,
+        passwordConfirm: false,
+      });
       APIService.RegisterUser({ username, password })
         .then(() => loginBtn())
-        .catch((error) => setError(error));
+        .catch((error) => {
+          setError(error);
+          console.log(error);
+        });
     } else {
-      setError("");
-      setFormError({ username: !username, password: !password });
+      if (password && passwordConfirm && password != passwordConfirm) {
+        setError({ message: "Passwords do not match" });
+        setFormError({ ...formError, password: true, passwordConfirm: true });
+      } else {
+        setError("");
+        setFormError({
+          username: !username,
+          password: !password,
+          passwordConfirm: !passwordConfirm,
+        });
+      }
+
       {
         username
           ? document.querySelector("#password").select()
@@ -156,17 +187,37 @@ function Login() {
                   <FormFeedback>Please provide a password</FormFeedback>
                 )}
               </Col>
-              {error ? (
-                <Row className="g-2">
-                  <Col className="d-flex justify-content-center">
-                    <FormText style={{ fontWeight: "bold" }}>
-                      {error.message}
-                    </FormText>
-                  </Col>
-                </Row>
-              ) : null}
             </FormGroup>
-            <Row>
+            {!isLogin && (
+              <FormGroup className="position-relative" row>
+                <Col>
+                  <Label htmlFor="passwordConfirm" className="form-label">
+                    Confirm Password
+                  </Label>
+                  <Input
+                    type="password"
+                    id="passwordConfirm"
+                    placeholder="Please Confirm Password"
+                    onChange={(e) => handlePasswordConfirm(e.target.value)}
+                    value={passwordConfirm}
+                    invalid={formError.passwordConfirm}
+                  />
+                  {formError.passwordConfirm && (
+                    <FormFeedback>Please confirm password.</FormFeedback>
+                  )}
+                </Col>
+              </FormGroup>
+            )}
+            {error ? (
+              <Row className="g-2">
+                <Col className="d-flex justify-content-center">
+                  <FormText style={{ fontWeight: "bold" }}>
+                    {error.message}
+                  </FormText>
+                </Col>
+              </Row>
+            ) : null}
+            <FormGroup row>
               <Col className="d-flex justify-content-center">
                 {isLogin ? (
                   <Button
@@ -191,7 +242,7 @@ function Login() {
                   </Button>
                 )}
               </Col>
-            </Row>
+            </FormGroup>
             <Row>
               <Col className="d-flex justify-content-center">
                 {isLogin ? (

@@ -165,10 +165,12 @@ function ArticleList(props) {
                       {article.url ? (
                         <a href={article.url} target="_blank" rel="noreferrer">
                           <div id="url-link">
-                            <img
-                              src={article.url + "/favicon.ico"}
-                              alt=""
-                            ></img>
+                            {
+                              <img
+                                src={article.url + "/favicon.ico"}
+                                alt=""
+                              ></img>
+                            }
                           </div>
                         </a>
                       ) : (

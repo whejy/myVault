@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from .models import Vault
 from .serializers import UserSerializer, VaultSerializer
 from rest_framework import viewsets
@@ -18,9 +19,18 @@ class VaultViewSet(viewsets.ModelViewSet):
         user = self.request.user
         return Vault.objects.filter(author=user).order_by("-created")
 
+    # def create(self, request):
+    #     serializer = VaultSerializer(data=self.request.data)
+    #     print(serializer)
+    #     print(serializer.is_valid(self))
+
     # Override default model save instance to include a foreign key when new password is stored
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        if serializer.is_valid():
+            serializer.save(author=self.request.user)
+        else:
+            print("not valid")
+            return
 
     # Delete ALL storage instances at once method (by visiting vault/delete)
     @action(methods=["DELETE"], detail=False)

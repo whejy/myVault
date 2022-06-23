@@ -103,7 +103,7 @@ function App() {
       setArticles(new_article);
     }
 
-    if (action === "insert") {
+    if (action === "insert" && article) {
       article.color = getColor();
       setArticles([article, ...articles]);
       setAnimateInsert(article);

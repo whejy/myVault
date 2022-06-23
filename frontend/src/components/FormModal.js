@@ -169,7 +169,7 @@ function FormModal(props) {
                     onFocus={(e) => {
                       e.target.select();
                     }}
-                    type="url"
+                    type="text"
                     className="form-control"
                     id="url"
                     placeholder="https://"

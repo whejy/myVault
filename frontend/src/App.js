@@ -8,7 +8,7 @@ import Logout from "./components/Logout";
 import LoadingSpinner from "./components/Spinner";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import randomColor from "randomcolor";
 
 function App() {

@@ -3,22 +3,19 @@ import EditArticle from "./EditArticle";
 import DeleteArticle from "./DeleteArticle";
 import Tooltip from "./Tooltip";
 import {
-  Button,
   Container,
   Card,
   CardBody,
   CardFooter,
-  CardText,
-  CardTitle,
   Row,
   Col,
-  CardSubtitle,
+  CardText,
   CardHeader,
+  CardSubtitle,
 } from "reactstrap";
 import { FaCopy, FaRegCopy } from "react-icons/fa";
 import { BiHide, BiShow } from "react-icons/bi";
 import { ImHappy } from "react-icons/im";
-import randomColor from "randomcolor";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
@@ -153,15 +150,19 @@ function ArticleList(props) {
                     className="d-flex justify-content-center"
                   >
                     <Col>
-                      <span className="card-body-titles">Username:</span>{" "}
-                      <h3>{article.username}</h3>
+                      <CardSubtitle className="card-body-titles">
+                        Username:
+                      </CardSubtitle>{" "}
+                      <CardText className="h3">{article.username}</CardText>
                       <br />
-                      <span className="card-body-titles">Password: </span>
-                      <h3>
+                      <CardSubtitle className="card-body-titles">
+                        Password:{" "}
+                      </CardSubtitle>
+                      <CardText className="h3">
                         {article.visibility
                           ? article.password
                           : hidePassword(article.password)}
-                      </h3>
+                      </CardText>
                     </Col>
                     <Col
                       xs={"4"}

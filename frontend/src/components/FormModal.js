@@ -20,10 +20,13 @@ function FormModal(props) {
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
+  const [urlChecked, setUrlChecked] = useState(false);
   const [token] = useCookies(["mytoken"]);
   const [formError, setFormError] = useState({
     username: false,
     password: false,
+    description: false,
+    url: false,
   });
 
   useEffect(() => {
@@ -31,7 +34,12 @@ function FormModal(props) {
     setPassword(props.article.password);
     setDescription(props.article.description);
     setUrl(props.article.url);
-    setFormError({ username: false, password: false, description: false });
+    setFormError({
+      username: false,
+      password: false,
+      description: false,
+      url: false,
+    });
   }, [props.article]);
 
   useEffect(() => {
@@ -46,8 +54,37 @@ function FormModal(props) {
     setFormError({ ...formError, description: false });
   }, [description]);
 
-  const updateArticle = (e) => {
+  useEffect(() => {
+    setFormError({ ...formError, url: false });
+    setUrlChecked(false);
+  }, [url]);
+
+  const checkUrl = (e, action) => {
     e.preventDefault();
+    APIService.ValidateUrl(url).then((resp) => {
+      if (resp) {
+        // Ensure app doesn't check same submitted url more than once. Faster performance
+        setUrlChecked(true);
+        if (action === "insert") {
+          insertArticle();
+        } else {
+          updateArticle();
+        }
+      } else {
+        setFormError({
+          username: !username,
+          password: !password,
+          description: !description,
+          url: true,
+        });
+      }
+    });
+  };
+
+  const updateArticle = (e = null) => {
+    {
+      e && e.preventDefault();
+    }
     if (username && password && description) {
       props.handleModal();
       APIService.UpdateArticle(
@@ -69,8 +106,10 @@ function FormModal(props) {
     }
   };
 
-  const insertArticle = (e) => {
-    e.preventDefault();
+  const insertArticle = (e = null) => {
+    {
+      e && e.preventDefault();
+    }
     if (username && password && description) {
       props.handleModal();
       APIService.InsertArticle(
@@ -98,10 +137,10 @@ function FormModal(props) {
           onSubmit={
             props.article.id
               ? (e) => {
-                  updateArticle(e);
+                  url && !urlChecked ? checkUrl(e, "update") : updateArticle(e);
                 }
               : (e) => {
-                  insertArticle(e);
+                  url && !urlChecked ? checkUrl(e, "insert") : insertArticle(e);
                 }
           }
         >
@@ -174,6 +213,7 @@ function FormModal(props) {
                     id="url"
                     placeholder="https://"
                     value={url}
+                    invalid={formError.url}
                     onChange={(e) => {
                       // Prefix "https://" to user URL input form
                       const prefix = "https://";
@@ -196,6 +236,7 @@ function FormModal(props) {
                       setUrl(e.target.value);
                     }}
                   />
+                  {formError.url && <FormModalFeedback urlError={true} />}
                 </FormGroup>{" "}
               </Container>
             ) : null}

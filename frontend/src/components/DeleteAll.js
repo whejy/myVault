@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "reactstrap";
 import Tooltip from "./Tooltip";
-// import ReactTooltip from "react-tooltip";
 import DeleteModal from "./DeleteModal";
 import { RiDeleteBinLine } from "react-icons/ri";
 

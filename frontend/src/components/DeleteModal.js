@@ -1,17 +1,7 @@
 import React, { Component } from "react";
 import APIService from "../APIService";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  FormGroup,
-  Input,
-  Label,
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { withCookies } from "react-cookie";
-// import { TokenContext } from "../TokenContext";
 
 export class MyModal extends Component {
   constructor(props) {
@@ -22,7 +12,6 @@ export class MyModal extends Component {
   }
 
   deleteConfirm = (article = null) => {
-    // let token = this.context.mytoken;
     let token = this.state.token;
 
     if (article) {
@@ -65,5 +54,4 @@ export class MyModal extends Component {
     );
   }
 }
-// MyModal.contextType = TokenContext;
 export default withCookies(MyModal);

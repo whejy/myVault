@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DeleteModal from "./DeleteModal";
 import Tooltip from "./Tooltip";
-import { Button } from "reactstrap";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 
 function DeleteArticle(props) {
@@ -18,12 +17,6 @@ function DeleteArticle(props) {
 
   return (
     <div>
-      {/* <a data-tip="Delete" data-for="delete" data-delay-show="500">
-        <ReactTooltip id="delete" place="top" type="info" effect="solid" />
-        <span className="card-icons" onClick={handleModal}>
-          <RiDeleteBack2Fill size={"1.5em"} color="red" />
-        </span>
-      </a> */}
       <Tooltip
         message={"Delete"}
         id={"delete"}

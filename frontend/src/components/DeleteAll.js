@@ -31,14 +31,6 @@ function DeleteAll(props) {
           </Button>
         }
       />
-      {/* <a data-tip="Delete All" data-for="deleteall" data-delay-show="500">
-        <ReactTooltip id="deleteall" place="top" type="light" effect="solid" />
-        <span title="Delete All" className="card-icons" onClick={handleModal}>
-          <Button className="button-outline" outline color="danger">
-            <RiDeleteBinLine color="white" size={"1.5em"} />
-          </Button>
-        </span>
-      </a> */}
       {modal ? (
         <DeleteModal
           handleModal={handleModal}

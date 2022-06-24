@@ -56,16 +56,21 @@ function ArticleList(props) {
         )}
         {props.articles.length < 1 && props.hasSearched ? (
           <Col className="d-flex justify-content-center">
-            <div id="empty-search">Nothing to show...</div>
+            <div id="empty-search">No results.</div>
           </Col>
         ) : null}
+        {props.articles.length < 1 && !props.hasSearched && !props.spinner && (
+          <Col className="d-flex justify-content-center">
+            <div id="empty-search">Empty...</div>
+          </Col>
+        )}
         {props.articles &&
           props.articles.map((article) => {
             return (
               <Col
                 key={article.id}
                 className={
-                  article == props.animateDelete
+                  props.animateDelete.indexOf(article) != -1
                     ? "article-animate-delete"
                     : article == props.animateInsert
                     ? "article-animate-insert"

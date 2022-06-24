@@ -16,7 +16,7 @@ function App() {
   const [searchResults, setSearchResults] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [animateDelete, setAnimateDelete] = useState(null);
+  const [animateDelete, setAnimateDelete] = useState([]);
   const [animateInsert, setAnimateInsert] = useState(null);
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
@@ -76,19 +76,22 @@ function App() {
     if (action === "delete") {
       let new_articles = [];
       if (article) {
+        // Delete single
         new_articles = articles.filter((myarticle) => {
           if (myarticle.id === article.id) {
-            setAnimateDelete(article);
+            setAnimateDelete([article]);
             return false;
           }
           return true;
         });
-        setTimeout(() => {
-          setArticles(new_articles);
-        }, 1000);
       } else {
-        setArticles(new_articles);
+        // Delete all
+        setAnimateDelete(articles);
       }
+      // Allow animation to play out before triggering re-render
+      setTimeout(() => {
+        setArticles(new_articles);
+      }, 900);
     }
 
     if (action === "update") {

@@ -33,6 +33,10 @@ function ArticleList(props) {
     props.handleArticleList(new_article, "update");
   };
 
+  const resetCopy = () => {
+    setIsActive(null);
+  };
+
   function hidePassword(password) {
     return password.split("").map(() => "*");
   }
@@ -201,6 +205,8 @@ function ArticleList(props) {
                           outline
                           article={article}
                           handleArticleList={props.handleArticleList}
+                          isActive={isActive}
+                          resetCopy={resetCopy}
                         />
                         <DeleteArticle
                           article={article}

@@ -86,6 +86,13 @@ function FormModal(props) {
       e && e.preventDefault();
     }
     if (username && password && description) {
+      // Reset "copied" password if user updates stored password
+      if (
+        props.isActive == props.article.id &&
+        props.article.password != password
+      ) {
+        props.resetCopy();
+      }
       props.handleModal();
       APIService.UpdateArticle(
         props.article.id,

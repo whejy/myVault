@@ -31,6 +31,8 @@ function EditArticle(props) {
           handleModal={handleModal}
           article={props.article}
           handleArticleList={props.handleArticleList}
+          isActive={props.isActive}
+          resetCopy={props.resetCopy}
         />
       ) : null}
     </div>

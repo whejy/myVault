@@ -13,7 +13,11 @@ function Search(props) {
     } else {
       search();
     }
-  }, [searchFilter, searchQuery, props.articles]);
+  }, [searchFilter, searchQuery, props.triggerReset[0] === true]);
+
+  // useEffect(() => {
+  //   reset();
+  // }, [props.animateReset === true]);
 
   //   Store user's search input
   const handleSearchQuery = (query) => {

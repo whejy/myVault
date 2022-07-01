@@ -71,17 +71,18 @@ function ArticleList(props) {
               <Col
                 key={article.id}
                 className={
-                  props.animateDelete.indexOf(article) != -1
-                    ? "article-animate-delete"
-                    : article == props.animateInsert
-                    ? "article-animate-insert"
-                    : null
+                  props.animateDelete.indexOf(article) !== -1
+                    ? "d-flex article-animate-delete"
+                    : props.animateInsert.indexOf(article) !== -1
+                    ? "d-flex article-animate-insert"
+                    : "d-flex"
                 }
                 xs={"10"}
                 sm={"7"}
                 md={"5"}
-                lg={"4"}
-                xl={"3"}
+                lg={"5"}
+                xl={"4"}
+                xxl={"3"}
               >
                 <Card id="card-whole" color="secondary" body outline>
                   <CardHeader
@@ -94,7 +95,7 @@ function ArticleList(props) {
                       <Col
                         style={{ textAlign: "center" }}
                         sm={"7"}
-                        className="d-flex align-items-center justify-content-center justify-content-sm-start"
+                        className="d-flex align-items-center justify-content-center justify-content-lg-start"
                       >
                         {article.description && (
                           <span id="article-description">
@@ -114,16 +115,16 @@ function ArticleList(props) {
                         >
                           <Tooltip
                             message={
-                              article.id == isActive
+                              article.id === isActive
                                 ? "Copied!"
                                 : "Copy Password"
                             }
-                            delay={article.id == isActive ? 1 : 500}
+                            delay={article.id === isActive ? 1 : 500}
                             type={"info"}
                             position={"top"}
                             id={"copy"}
                             button={
-                              isActive == article.id ? (
+                              isActive === article.id ? (
                                 <FaCopy size={"1.5em"} />
                               ) : (
                                 <FaRegCopy size={"1.5em"} />
@@ -149,44 +150,49 @@ function ArticleList(props) {
                       </Col>
                     </Row>
                   </CardHeader>
-                  <CardBody
-                    id="card-body"
-                    className="d-flex justify-content-center"
-                  >
+                  <CardBody id="card-body" className="justify-content-center">
                     <Col>
                       <CardSubtitle className="card-body-titles">
                         Username:
                       </CardSubtitle>{" "}
-                      <CardText className="h3">{article.username}</CardText>
+                      <CardText className="h3 text-center">
+                        {article.username}
+                      </CardText>
                       <br />
                       <CardSubtitle className="card-body-titles">
                         Password:{" "}
                       </CardSubtitle>
-                      <CardText className="h3">
+                      <CardText className="h3 text-center">
                         {article.visibility
                           ? article.password
                           : hidePassword(article.password)}
                       </CardText>
                     </Col>
-                    <Col
-                      xs={"4"}
-                      className="d-flex justify-content-center align-items-center"
-                    >
-                      {article.url ? (
-                        <a href={article.url} target="_blank" rel="noreferrer">
-                          <div id="url-link">
-                            {
-                              <img
-                                src={article.url + "/favicon.ico"}
-                                alt=""
-                              ></img>
-                            }
-                          </div>
-                        </a>
-                      ) : (
-                        <ImHappy color={article.color} size={"5em"} />
-                      )}
-                    </Col>
+                    <Row className="justify-content-center">
+                      <Col
+                        xs={"6"}
+                        className="justify-content-center align-items-center"
+                      >
+                        {article.url ? (
+                          <a
+                            href={article.url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <div id="url-link">
+                              {
+                                <img
+                                  src={article.url + "/favicon.ico"}
+                                  alt=""
+                                ></img>
+                              }
+                            </div>
+                          </a>
+                        ) : (
+                          <ImHappy color={article.color} size={"5em"} />
+                        )}
+                      </Col>
+                    </Row>
                   </CardBody>
                   <CardFooter
                     className="card-header-footer"

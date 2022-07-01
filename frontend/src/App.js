@@ -17,7 +17,8 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [animateDelete, setAnimateDelete] = useState([]);
-  const [animateInsert, setAnimateInsert] = useState(null);
+  const [animateInsert, setAnimateInsert] = useState([]);
+  const [triggerReset, setTriggerReset] = useState([false]);
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
 
@@ -53,6 +54,13 @@ function App() {
     }
   }, [token]);
 
+  // Animate all articles after Search changes
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimateInsert([]);
+    }, 2100);
+  }, [searchResults]);
+
   // Allow user to search for an article and filter search with radio buttons
   const handleSearchResults = (searchQuery, searchFilter) => {
     if (searchQuery) {
@@ -65,10 +73,13 @@ function App() {
       );
       setHasSearched(true);
       // If user erases search input, trigger render of original article list
-    } else {
+    } else if (!triggerReset[0]) {
       setHasSearched(false);
+      setAnimateInsert(articles);
       setSearchResults(null);
     }
+    // Change state without triggering re-render
+    triggerReset[0] = false;
   };
 
   // Refreshes Article List after user Deletes, Updates or Adds an item
@@ -104,12 +115,14 @@ function App() {
         }
       });
       setArticles(new_article);
+      setTriggerReset([true]);
     }
 
     if (action === "insert" && article) {
       article.color = getColor();
       setArticles([article, ...articles]);
-      setAnimateInsert(article);
+      setAnimateInsert([article]);
+      setTriggerReset([true]);
     }
   };
 
@@ -136,6 +149,8 @@ function App() {
             <Search
               articles={articles}
               handleSearchResults={handleSearchResults}
+              animateInsert={animateInsert}
+              triggerReset={triggerReset}
             />
           </Col>
         </Row>

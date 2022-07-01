@@ -16,16 +16,10 @@
 @keyframes fade-insert {
   0% {
     opacity: 0;
-    max-width: 0;
   }
 
-  25% {
-    opacity: 1;
-    max-width: 100%;
-  }
   100% {
     opacity: 1;
-    max-width: 100%;
   }
 }
 
@@ -73,12 +67,14 @@ body {
 #card-body {
   padding-top: 30px;
   padding-bottom: 30px;
+  text-align: center;
 }
 
 .card-body-titles {
   text-decoration: dashed;
   font-style: oblique;
   font-weight: lighter;
+  text-align: center;
 }
 
 .card-header-footer {

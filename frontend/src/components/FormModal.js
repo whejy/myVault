@@ -165,6 +165,7 @@ function FormModal(props) {
                     className="form-control"
                     id="description"
                     placeholder="Please enter a title"
+                    maxLength={15}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     invalid={formError.description}
@@ -183,6 +184,7 @@ function FormModal(props) {
                     className="form-control"
                     id="username"
                     placeholder="Please enter username"
+                    maxLength={30}
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     invalid={formError.username}
@@ -201,6 +203,7 @@ function FormModal(props) {
                     className="form-control"
                     id="password"
                     placeholder="Please enter password"
+                    maxLength={15}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     invalid={formError.password}

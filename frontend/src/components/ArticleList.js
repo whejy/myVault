@@ -95,13 +95,10 @@ function ArticleList(props) {
                       <Col
                         style={{ textAlign: "center" }}
                         sm={"7"}
+                        id="article-description"
                         className="d-flex align-items-center justify-content-center justify-content-lg-start"
                       >
-                        {article.description && (
-                          <span id="article-description">
-                            {article.description}
-                          </span>
-                        )}
+                        {article.description}
                       </Col>
                       <Col
                         sm={"5"}
@@ -150,14 +147,16 @@ function ArticleList(props) {
                       </Col>
                     </Row>
                   </CardHeader>
-                  <CardBody id="card-body" className="justify-content-center">
+                  <CardBody id="card-body">
                     <Col>
-                      <CardSubtitle className="card-body-titles">
-                        Username:
-                      </CardSubtitle>{" "}
-                      <CardText className="h3 text-center">
-                        {article.username}
-                      </CardText>
+                      <div style={{ height: "100px" }}>
+                        <CardSubtitle className="card-body-titles">
+                          Username:
+                        </CardSubtitle>{" "}
+                        <CardText className="h3 text-center">
+                          {article.username}
+                        </CardText>
+                      </div>
                       <br />
                       <CardSubtitle className="card-body-titles">
                         Password:{" "}
@@ -168,10 +167,13 @@ function ArticleList(props) {
                           : hidePassword(article.password)}
                       </CardText>
                     </Col>
-                    <Row className="justify-content-center">
+                    <Row
+                      style={{ height: "140px" }}
+                      className="justify-content-center"
+                    >
                       <Col
+                        className="d-flex justify-content-center align-items-center"
                         xs={"6"}
-                        className="justify-content-center align-items-center"
                       >
                         {article.url ? (
                           <a
@@ -179,7 +181,7 @@ function ArticleList(props) {
                             target="_blank"
                             rel="noreferrer"
                           >
-                            <div id="url-link">
+                            <div className="login-buttons" id="url-link">
                               {
                                 <img
                                   src={article.url + "/favicon.ico"}
@@ -189,7 +191,9 @@ function ArticleList(props) {
                             </div>
                           </a>
                         ) : (
-                          <ImHappy color={article.color} size={"5em"} />
+                          <div id="url-link">
+                            <ImHappy color={article.color} size={"5em"} />
+                          </div>
                         )}
                       </Col>
                     </Row>

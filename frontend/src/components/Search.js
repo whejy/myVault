@@ -15,10 +15,6 @@ function Search(props) {
     }
   }, [searchFilter, searchQuery, props.triggerReset[0] === true]);
 
-  // useEffect(() => {
-  //   reset();
-  // }, [props.animateReset === true]);
-
   //   Store user's search input
   const handleSearchQuery = (query) => {
     setSearchQuery(query);
@@ -34,7 +30,7 @@ function Search(props) {
     props.handleSearchResults(searchQuery, searchFilter);
   };
 
-  //
+  //   Reset Search inputs
   const reset = () => {
     handleSearchQuery("");
     handleSearchFilter("description");

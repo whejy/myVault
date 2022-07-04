@@ -21,11 +21,6 @@ function DeleteAll(props) {
 
   return (
     <span>
-      {/* <span title="Add New" className="card-icons" onClick={handleModal}>
-        <Button className="button-outline" outline color="success">
-          <MdOutlineLibraryAdd color="white" size={"1.5em"} />
-        </Button>
-      </span> */}
       <Tooltip
         message={"Add New"}
         type={"success"}

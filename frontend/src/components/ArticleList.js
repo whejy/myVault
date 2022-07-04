@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditArticle from "./EditArticle";
 import DeleteArticle from "./DeleteArticle";
 import Tooltip from "./Tooltip";
 import {
+  Button,
   Container,
   Card,
   CardBody,
@@ -19,6 +20,23 @@ import { ImHappy } from "react-icons/im";
 
 function ArticleList(props) {
   const [isActive, setIsActive] = useState(null);
+
+  // Dynamic auto-scroll to first row of articles, keeping search bar in view
+  useEffect(() => {
+    var width = window.innerWidth; // get the window's inner width
+    var scrollHeight;
+
+    if (width > 1200) {
+      scrollHeight = 280;
+    } else if (width <= 1200 && width > 1000) {
+      scrollHeight = 250;
+    } else if (width <= 1000 && width > 800) {
+      scrollHeight = 200;
+    } else {
+      scrollHeight = 160;
+    }
+    window.scrollTo(0, scrollHeight);
+  }, [props.articles]);
 
   // Toggle password visibility
   const togglePassword = (article) => {
@@ -39,6 +57,14 @@ function ArticleList(props) {
 
   function hidePassword(password) {
     return password.split("").map(() => "*");
+  }
+
+  // Open clicked on URL after a timeout to allow button animation
+  function urlOpen(url) {
+    setTimeout(() => {
+      window.open(url, "_blank");
+    }, 500);
+    return;
   }
 
   return (
@@ -80,9 +106,8 @@ function ArticleList(props) {
                 xs={"10"}
                 sm={"7"}
                 md={"5"}
-                lg={"5"}
-                xl={"4"}
-                xxl={"3"}
+                lg={"4"}
+                xl={"3"}
               >
                 <Card id="card-whole" color="secondary" body outline>
                   <CardHeader
@@ -176,20 +201,22 @@ function ArticleList(props) {
                         xs={"6"}
                       >
                         {article.url ? (
-                          <a
-                            href={article.url}
-                            target="_blank"
-                            rel="noreferrer"
+                          <Button
+                            outline
+                            color="light"
+                            className="login-buttons"
+                            onClick={(e) => {
+                              urlOpen(article.url, e);
+                            }}
+                            id="url-link"
                           >
-                            <div className="login-buttons" id="url-link">
-                              {
-                                <img
-                                  src={article.url + "/favicon.ico"}
-                                  alt=""
-                                ></img>
-                              }
-                            </div>
-                          </a>
+                            {
+                              <img
+                                src={article.url + "/favicon.ico"}
+                                alt=""
+                              ></img>
+                            }
+                          </Button>
                         ) : (
                           <div id="url-link">
                             <ImHappy color={article.color} size={"5em"} />

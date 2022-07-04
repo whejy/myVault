@@ -1,6 +1,5 @@
 import React from "react";
 import ReactTooltip from "react-tooltip";
-import { Button } from "reactstrap";
 
 function Tooltip(props) {
   return (

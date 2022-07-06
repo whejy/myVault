@@ -75,8 +75,8 @@ function App() {
       // If user erases search input, trigger render of original article list
     } else if (!triggerReset[0]) {
       setHasSearched(false);
-      setAnimateInsert(articles);
       setSearchResults(null);
+      setAnimateInsert(articles);
     }
     // Change state without triggering re-render
     triggerReset[0] = false;

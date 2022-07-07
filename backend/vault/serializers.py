@@ -1,5 +1,3 @@
-from xml.dom import ValidationErr
-from django.forms import ValidationError
 from rest_framework import serializers
 from .models import Vault
 from django.contrib.auth.models import User

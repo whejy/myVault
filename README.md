@@ -6,7 +6,9 @@ Convenient credential storage.
 
 myVault is a username/ password storage web application built with Django and React.js. Designed with convenience in mind, this app features the following:
 
-- Add new, update, delete, delete all article functionality via API from Django to React
+- CRUD functionality via API from Django to React
+
+- Rest authentication with auto-generated Token on account creation, accessed with React cookies
 
 - Realtime search bar with filters and reset button for quick data retrieval
 
@@ -20,7 +22,7 @@ myVault is a username/ password storage web application built with Django and Re
 
 - Mobile responsive auto-scroll on article-list load that centers the articles to the viewport
 
-- Backend encryption for all usernames and passwords
+- Backend encryption for all usernames and passwords. Username/ Password fields excluded from Admin view
 
 For these reasons, I believe myVault satisfies the requirements for Distinctiveness and Complexity.
 

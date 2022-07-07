@@ -2,11 +2,11 @@
 
 Convenient credential storage.
 
-#### Distinctiveness and Complexity
+## Distinctiveness and Complexity
 
 myVault is a username/ password storage web application built with Django and React.js. Designed with convenience in mind, this app features the following:
 
-- Add new, update, delete, delete all article functionality via APIs
+- Add new, update, delete, delete all article functionality via API from Django to React
 
 - Realtime search bar with filters and reset button for quick data retrieval
 
@@ -24,7 +24,7 @@ myVault is a username/ password storage web application built with Django and Re
 
 For these reasons, I believe myVault satisfies the requirements for Distinctiveness and Complexity.
 
-## Installation:
+## Installation
 
 Install dependencies:
 
@@ -46,6 +46,6 @@ In a second terminal window, navigate to /frontend and execute:
 
 to start React.js.
 
-#### Files
+## Files
 
 /backend contains Django project files and /backend/vault contains app files for myVault. /frontend contains React.js files, frontend/src contains the React.js source code for this app, including all CSS and JS files. App.js is the highest order React component which renders each component contained in frontend/src/components. /frontend/src/APIService.js contains all API functions which make calls to /backend/vault/urls.py and are handled by /backend/vault/views.py. APIService.js also contains an async function ValidateUr() which checks for a response from a user URL input and returns a boolean.

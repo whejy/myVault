@@ -18,7 +18,7 @@ myVault is a username/ password storage web application built with Django and Re
 
 - Dynamic form errors that respond to user input in realtime. For responsiveness, if the URL is valid but another field is invalid, the URL is not checked again unless altered
 
-- Mobile responsive auto-scroll on article-list load that enters the articles to the viewport
+- Mobile responsive auto-scroll on article-list load that centers the articles to the viewport
 
 - Backend encryption for all usernames and passwords
 

@@ -18,6 +18,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [animateDelete, setAnimateDelete] = useState([]);
   const [animateInsert, setAnimateInsert] = useState([]);
+  const [articlesChanged, setArticlesChanged] = useState([false]);
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
 
@@ -75,8 +76,15 @@ function App() {
     } else {
       setHasSearched(false);
       setSearchResults(null);
-      setAnimateInsert(articles);
+      // If insert or update has not been called, user has reset search results -
+      // Animate all articles
+      if (!articlesChanged[0]) {
+        setAnimateInsert(articles);
+      }
     }
+
+    // Change state without triggering re-render
+    articlesChanged[0] = false;
   };
 
   // Refreshes Article List after user Deletes, Updates or Adds an item
@@ -111,6 +119,7 @@ function App() {
           return myarticle;
         }
       });
+      setArticlesChanged([true]);
       setArticles(new_article);
     }
 
@@ -118,6 +127,7 @@ function App() {
       article.color = getColor();
       setArticles([article, ...articles]);
       setAnimateInsert([article]);
+      setArticlesChanged([true]);
     }
   };
 
@@ -142,9 +152,9 @@ function App() {
         <Row className="d-flex justify-content-center">
           <Col xs={"12"}>
             <Search
-              articles={articles}
               handleSearchResults={handleSearchResults}
               animateInsert={animateInsert}
+              articlesChanged={articlesChanged}
             />
           </Col>
         </Row>

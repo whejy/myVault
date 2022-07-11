@@ -18,7 +18,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [animateDelete, setAnimateDelete] = useState([]);
   const [animateInsert, setAnimateInsert] = useState([]);
-  const [triggerReset, setTriggerReset] = useState([false]);
   const [token, setToken, removeToken] = useCookies(["mytoken"]);
   let navigate = useNavigate();
 
@@ -73,13 +72,11 @@ function App() {
       );
       setHasSearched(true);
       // If user erases search input, trigger render of original article list
-    } else if (!triggerReset[0]) {
+    } else {
       setHasSearched(false);
       setSearchResults(null);
       setAnimateInsert(articles);
     }
-    // Change state without triggering re-render
-    triggerReset[0] = false;
   };
 
   // Refreshes Article List after user Deletes, Updates or Adds an item
@@ -115,14 +112,12 @@ function App() {
         }
       });
       setArticles(new_article);
-      setTriggerReset([true]);
     }
 
     if (action === "insert" && article) {
       article.color = getColor();
       setArticles([article, ...articles]);
       setAnimateInsert([article]);
-      setTriggerReset([true]);
     }
   };
 
@@ -150,7 +145,6 @@ function App() {
               articles={articles}
               handleSearchResults={handleSearchResults}
               animateInsert={animateInsert}
-              triggerReset={triggerReset}
             />
           </Col>
         </Row>

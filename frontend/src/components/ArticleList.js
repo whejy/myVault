@@ -36,7 +36,7 @@ function ArticleList(props) {
       scrollHeight = 160;
     }
     window.scrollTo(0, scrollHeight);
-  }, [props.articles]);
+  }, [props.articles.length]);
 
   // Toggle password visibility
   const togglePassword = (article) => {

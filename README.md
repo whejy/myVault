@@ -1,8 +1,8 @@
 # myVault
 
-myVault is a username/ password storage web application built with Django and React.js which I created for CS50W's [Capstone Project](https://cs50.harvard.edu/web/2020/projects/final/capstone/).
+myVault is a convenient credential storage web application built with Django and React.js.
 
-Designed with convenience in mind, myVault features the following:
+## Features
 
 - Backend encryption for all usernames and passwords. Username/ Password fields excluded from Admin view.
 

@@ -1,30 +1,24 @@
 # myVault
 
-Convenient credential storage.
+myVault is a username/ password storage web application built with Django and React.js which I created for CS50W's [Capstone Project](https://cs50.harvard.edu/web/2020/projects/final/capstone/).
 
-## Distinctiveness and Complexity
+Designed with convenience in mind, myVault features the following:
 
-myVault is a username/ password storage web application built with Django and React.js. Designed with convenience in mind, this app features the following:
+- Backend encryption for all usernames and passwords. Username/ Password fields excluded from Admin view.
 
-- CRUD functionality via API from Django to React
+- CRUD functionality via API from Django to React, secured with Rest Authentication and unique auto-generated Token on account creation.
 
-- Rest authentication with auto-generated Token on account creation, accessed with React cookies
+- Realtime search bar with filters and reset button for quick data retrieval.
 
-- Realtime search bar with filters and reset button for quick data retrieval
+- URL storage field to provide users easy navigation via the URL's favicon to where their credentials are required. Copy-to-clipboard functionality for passwords included.
 
-- Optional storage field for URLs to provide users easy navigation via the URL's favicon to where their passwords are required
+- Input URLS are validated via an async function that checks for a response, informing the user of a bad result and preventing database storage.
 
-- Copy-to-clipboard functionality
+- Dynamic form errors that respond to user input in realtime. For responsiveness, if a supplied URL is valid but another field is not, the URL is not checked again unless altered
 
-- Input URLS are checked via an async function, informing the user of a bad result and preventing database storage
+- Mobile responsive auto-scroll on page-load that centers the articles to the viewport.
 
-- Dynamic form errors that respond to user input in realtime. For responsiveness, if the URL is valid but another field is invalid, the URL is not checked again unless altered
-
-- Mobile responsive auto-scroll on article-list load that centers the articles to the viewport
-
-- Backend encryption for all usernames and passwords. Username/ Password fields excluded from Admin view
-
-For these reasons, I believe myVault satisfies the requirements for Distinctiveness and Complexity.
+- Minimalist design.
 
 ## Installation
 
@@ -68,4 +62,4 @@ to start React.js.
 
 ## Comments
 
-One feature that could potentially be improved upon is encryption. Currently a single encryption key is used across the app to encrypt all data. Initially my goal was to create a function that generates a unique encryption key for each storage item, based on some combination of the article's data. I was able to successfully encrypt and decrypt data this way, however once encrypted data was stored in the database I had some difficulties in decrypting the data. I assume this is because of how the data is stored and attempting to translate between bytes and string.
+One feature that could be improved upon is encryption. Currently a single encryption key is used across the app to encrypt all data. Initially my goal was to create a function that generates a unique encryption key for each storage item, based on some combination of the article's data. I was able to directly encrypt and decrypt data this way, however once encrypted data was stored in the database I had some difficulties in decrypting the data again. I assume this is because of how the data is stored and attempting to translate between bytes and string data types.

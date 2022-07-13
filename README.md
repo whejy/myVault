@@ -18,7 +18,7 @@ myVault is a convenient credential storage web application built with Django and
 
 - Input URLS are validated via an async function that checks for a response, informing the user of a bad result and preventing database storage.
 
-- Dynamic form errors that respond to user input in realtime. For responsiveness, if a supplied URL is valid but another field is not, the URL is not checked again unless altered
+- Dynamic form errors that respond to user input in realtime. For responsiveness, if a supplied URL is valid but another field is not, the URL is not checked again unless altered.
 
 <img src="screenshots/Errors.png" height="400">
 

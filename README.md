@@ -2,7 +2,7 @@
 
 myVault is a convenient credential storage web application built with Django and React.js. Video demonstration [here](https://youtu.be/R0eoPqPGfpM).
 
-![](screenshots/Home.png)
+<img src="screenshots/Home.png" height="400">
 
 ## Features
 
@@ -12,7 +12,7 @@ myVault is a convenient credential storage web application built with Django and
 
 - Realtime search bar with filters and reset button for quick data retrieval.
 
-![](screenshots/Search.png)
+<img src="screenshots/Search.png" height="400">
 
 - URL storage field to provide users easy navigation via the URL's favicon to where their credentials are required. Copy-to-clipboard functionality for passwords included.
 
@@ -20,13 +20,13 @@ myVault is a convenient credential storage web application built with Django and
 
 - Dynamic form errors that respond to user input in realtime. For responsiveness, if a supplied URL is valid but another field is not, the URL is not checked again unless altered
 
-![](screenshots/Errors.png)
+<img src="screenshots/Errors.png" height="400">
 
 - Mobile responsive auto-scroll on page-load that centers the articles to the viewport.
 
 - Minimalist design.
 
-![](screenshots/Login.png)
+<img src="screenshots/Login.png" height="400">
 
 ## Installation
 

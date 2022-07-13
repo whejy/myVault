@@ -12,9 +12,7 @@ myVault is a convenient credential storage web application built with Django and
 
 - Realtime search bar with filters and reset button for quick data retrieval.
 
-<!-- <img src="screenshots/Search.png" height="400"> -->
-
-![](screenshots/Search.png)
+<img src="screenshots/Search.png" height="400">
 
 - URL storage field to provide users easy navigation via the URL's favicon to where their credentials are required. Copy-to-clipboard functionality for passwords included.
 

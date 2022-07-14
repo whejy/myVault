@@ -70,7 +70,15 @@ to start React.js.
 
 ## Files
 
-/backend contains Django project files and /backend/vault contains app files for myVault. /frontend contains React.js files, frontend/src contains the React.js source code for this app, including all CSS and JS files. App.js is the highest order React component which renders each component contained in frontend/src/components. /frontend/src/APIService.js contains all API functions which make calls to /backend/vault/urls.py and are handled by /backend/vault/views.py. APIService.js also contains an async function ValidateUr() which checks for a response from a user URL input and returns a boolean.
+- `/backend` contains Django project files.
+  - `/vault` contains app files for myVault.
+    - `/urls.py` directs all API calls made via React.
+    - `/views.py` responds to API calls.
+- `/frontend` contains React.js files.
+  - `/src` contains the React.js source code for this app, including all CSS and JS files.
+    - `/components` contains React components.
+      - `App.js` is highest order components which renders all other components.
+    - `/APIService.js` contains all API functions which make calls to `/backend/vault/urls.py` and are handled by `/backend/vault/views.py`.
 
 ## Comments
 

@@ -34,9 +34,7 @@ Install dependencies:
 
 `pip install -r requirements.txt`
 
-Generate unique encryption key:
-
-Open a python shell and execute:
+To generate unique encryption key, open a python shell and execute:
 
 ```
 import os
@@ -46,9 +44,15 @@ new_key = base64.urlsafe_b64encode(os.urandom(32))
 print(new_key)
 ```
 
-Navigate to /backend/settings.py and set FIELD_ENCRYPTION_KEY = your new_key
+Open /backend/settings.py and set FIELD_ENCRYPTION_KEY = your new_key
 
 In a terminal window, navigate to /backend and execute:
+
+`python manage.py createsuperuser`
+
+and follow the prompts to create your admin user.
+
+In the same directory, execute the following:
 
 `python3 manage.py makemigrations`
 
@@ -56,7 +60,7 @@ In a terminal window, navigate to /backend and execute:
 
 `python3 manage.py runserver`
 
-to initiate database and start Django server.
+to initiate the database and start Django server.
 
 In a second terminal window, navigate to /frontend and execute:
 

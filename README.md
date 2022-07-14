@@ -48,7 +48,7 @@ Open /backend/settings.py and set FIELD_ENCRYPTION_KEY = your new_key
 
 In a terminal window, navigate to /backend and execute:
 
-`python manage.py createsuperuser`
+`python3 manage.py createsuperuser`
 
 and follow the prompts to create your admin user.
 
